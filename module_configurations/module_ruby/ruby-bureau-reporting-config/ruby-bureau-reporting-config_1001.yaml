@@ -1,44 +1,55 @@
 kind: RubyBureauReportingConfig
 apiVersion: rrsd.zetaapps.in/v1alpha1
 metadata:
-  name: lsg.tdr.rubybureaureportingconfig.module.1001
+  name: lsg.tdr.rubybureaureportingconfig.nova.us
   labels:
     rrsd.zetaapps.in/day: day-zero
   annotations:
-    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_ruby/ruby-bureau-reporting-config/ruby-bureau-reporting-config_1001.yaml","tenantCode":"lsg"}'
+    zeta.tech/resource-tags: '{"tenantCode":"lsg"}'
 spec:
   metadata:
-    id: tdr.rubybureaureportingconfig.module.1001
-    name: tdr.rubybureaureportingconfig.module.1001
-    description: tdr.rubybureaureportingconfig.module.1001
+    id: tdr.rubybureaureportingconfig.nova.us
+    name: Nova US Bureau Reporting Configuration
+    description: Reporting configuration for Nova Genesis and Rise products in the US Market
     tenantId: '600309'
     tenantCode: lsg
   configs:
-    - key: MicroBilt/PRBC Program Identifier
-      value: MicroBilt PRBC Program Identifier
-    - key: Software Version Number
-      value: '1'
-    - key: Identification Number
-      value: '00000'
-    - key: Program Revision Date
-      value: '12052023'
+    # --- REPORTER IDENTITY (BANK XEE) ---
+    - key: Reporter Name
+      [cite_start]value: Bank Xee [cite: 1, 88]
+    - key: Reporter Address
+      [cite_start]value: 123 Finance Way, Wilmington, DE 19801 [cite: 4, 109]
     - key: Reporter Telephone Number
-      value: '9211420786'
-    - key: Program Date
-      value: '12012023'
-    - key: Experian Program Identifier
-      value: '1234'
-    - key: IFI Identification Number
-      value: '5786453252'
-    - key: Innovis Program Identifier
-      value: '12345678'
-    - key: TransUnion Program Identifier
-      value: '78234562'
+      [cite_start]value: '18009336682' [cite: 4, 109]
+    
+    # --- SOFTWARE & VENDOR INFO ---
     - key: Software Vendor Name
       value: Zeta
+    - key: Software Version Number
+      value: '1'
+    
+    # --- BUREAU PROGRAM IDENTIFIERS (US MARKET) ---
+    # These identifiers enable the "Nova Credit Health" mission across all major bureaus
+    - key: Experian Program Identifier
+      value: 'EXP-NOVA-9900' 
     - key: Equifax Program Identifier
-      value: '87654321'
-    - key: Reporter Address
-      value: Whitefield
-    - key: Reporter Name
-      value: Zeta
+      value: 'EFX-NOVA-9900'
+    - key: TransUnion Program Identifier
+      value: 'TUI-NOVA-9900'
+    - key: Innovis Program Identifier
+      value: 'INV-NOVA-9900'
+    
+    # --- ALTERNATIVE DATA & SPECIALTY REPORTING ---
+    # Supports the "Alternative Data Underwriting" strategy for thin-file consumers
+    - key: MicroBilt/PRBC Program Identifier
+      value: NOVA-ALT-DATA-PROG
+    
+    # --- SYSTEM METADATA ---
+    - key: Identification Number
+      value: '7001' # Internal ID for the Nova Product Line
+    - key: IFI Identification Number
+      value: '5786453252'
+    - key: Program Date
+      [cite_start]value: '03012026' # Launch Month: March 2026 [cite: 8, 112]
+    - key: Program Revision Date
+      value: '03252026' # Latest Revision Date

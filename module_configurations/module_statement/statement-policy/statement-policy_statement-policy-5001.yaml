@@ -1,0 +1,138 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: StatementPolicy
+metadata:
+  name: lsg.statement.statementpolicy.3004
+spec:
+  metadata:
+    id: statement.statementpolicy.3004
+    name: Nova Financial Coach Generation Policy
+    description: 3004-based policies for US subprime rebuilder segment
+    requester:
+      module: statement
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2026-01-01T00:00:00.000-05:00'
+  validTill: '2999-01-01T00:00:00.000-05:00'
+  name: Statement Generation Policy
+  description: Nova Rebuilder Generation Policy
+  code: STMGEN003004
+  physicalStatementThreshold: '20'
+  password: function password(context) { return 'password' }
+  statementTemplateCode: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.4.2/cw/templatev1.html
+  
+  # --- LOCKBOX & COMPLIANCE ---
+  lockbox:
+    lockboxNumber: '9900'
+    lockboxAttributes:
+      - fieldName: accountNumber
+        include: Y
+        order: 1
+      - fieldName: minimumAmountDue
+        include: Y
+        order: 2
+      - fieldName: totalAmountDue
+        include: Y
+        order: 3
+      - fieldName: dueDate
+        include: Y
+        order: 4
+      - fieldName: checkDigit
+        include: Y
+        order: 5
+    encodingType: OCR A
+
+  templateCode: us-credit
+
+  # --- DYNAMIC MESSAGE ENGINE (NOVA SMART MOVES) ---
+  messageConfigs:
+    maxMessageCount: 3
+    defaultRule:
+      name: STATEMENT_PDF_MESSAGE
+      code: STMT_RULE_0
+      status: DISABLED
+      priority: 1
+      order: 1
+      condition: 'true'
+      content: Thank you for being a Nova customer! Keep building your future.
+      frequency: EVERYTIME
+      metaData:
+        isSuppressed: true
+    ruleList:
+      # RULE: Credit Utilization Nudge (The "Smart Move")
+      - name: STATEMENT_PDF_MESSAGE
+        code: NOVA_UTIL_NUDGE
+        status: ENABLED
+        priority: 1
+        order: 1
+        condition: input.utilization > 0.30
+        content: "POWER UP: Paying an extra @{input.utilizationAmount} brings you below 30% utilization - the credit score sweet spot!"
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+
+      # RULE: Graduation Milestone (Nova Genesis to Rise Path)
+      - name: STATEMENT_PDF_MESSAGE
+        code: NOVA_GRAD_NUDGE
+        status: ENABLED
+        priority: 2
+        order: 1
+        condition: input.onTimePaymentsCount >= 5 && input.productTier == 'GENESIS'
+        content: "You're doing great! You are just one on-time payment away from a Nova Rise (Unsecured) eligibility review."
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+
+      # RULE: Nova Shield (The Safety Net / Delinquency Dignity)
+      - name: STATEMENT_PDF_MESSAGE
+        code: NOVA_SAFETY_NET
+        status: ENABLED
+        priority: 3
+        order: 1
+        condition: input.delinquencyStatus == '1-CYCLE'
+        content: "Nova Shield: Struggling this month? Use 'Snooze' in the Nova App to shift your due date by 5 days with no fee."
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+
+      # RULE: Regulatory Bankruptcy Disclosure (Standard from 3004)
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_14
+        status: ENABLED
+        priority: 4
+        order: 1
+        condition: (input.bankruptcyStatusValue == 'BankruptcyInitiated' || input.bankruptcyStatusValue == 'BankruptcyDischarged')
+        content: Our records reflect that you are a debtor in an active bankruptcy case. This statement is for informational purposes only.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: true
+
+  # --- SCHUMER & INTEREST (REG Z COMPLIANCE) ---
+  schumerBoxConfig:
+    schumerMonthsToRepay:
+      - 36 # Mandated for US Regulation Z Payoff Comparison
+    showTotalCostOnMinimumPayment: true
+    showPaymentWarning: true
+  
+  rateChangeSummaryConfig:
+    showRateChangeSummary: false
+  
+  estimatedInterestConfig:
+    estimatedInterestBreakDownCount: 2
+  
+  interestBreakupConfig:
+    allowedBalanceTypes:
+      - retail
+      - cash
+    allowedPromotionalBalanceTypes:
+      - retail
+  
+  # --- REWARD ENGINE (NOVA PARTNER TABLE) ---
+  rewardConfig:
+    showSummary: true # Shows the Walmart/Gas Partner Table
+    showIssuance: true
+    showStatement: true
+
+  paymentInstrumentConfig:
+    allowStatementGenerationWithoutCardFormFactor: false
+    isAddOn: false
