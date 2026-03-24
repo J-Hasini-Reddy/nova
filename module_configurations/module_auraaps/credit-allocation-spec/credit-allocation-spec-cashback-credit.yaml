@@ -1,0 +1,51 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: CreditAllocationSpec
+metadata:
+  name: lsg.auraapps.configuration.module.cashback-credit.creditallocationspec
+  annotations: null
+  labels:
+    module: auraapps
+    rrsd.zetaapps.in/space: aws-default-pp-mumbai
+  namespace: auraapps
+spec:
+  metadata:
+    id: auraapps.configuration.module.cashback-credit.creditallocationspec
+    name: credit allocation spec
+    description: credit allocation spec
+    tenantId: '600309'
+    tenantCode: lsg
+  code: CRSUS001005
+  flags:
+    allocateToCategoryType: false
+    shouldMADBeKnockedOff: true
+  allocationSequence:
+  - LateFeeBilled
+  - InsufficientFundFeeBilled
+  - OverlimitFeeBilled
+  - CollectionFeeBilled
+  - CashAdvanceFeeBilled
+  - RetailMiscFeeBilled
+  - RetailServiceFeeBilled
+  - AnnualFeeBilled
+  - CashInterestBilled
+  - EMIInterestBilled
+  - RetailInterestBilled
+  - CashPrincipalBilled
+  - EMIPrincipalBilled
+  - RetailPrincipalBilled
+  - LateFeeUnbilled
+  - InsufficientFundFeeUnbilled
+  - OverlimitFeeUnbilled
+  - CollectionFeeUnbilled
+  - CashAdvanceFeeUnbilled
+  - RetailMiscFeeUnbilled
+  - RetailServiceFeeUnbilled
+  - AnnualFeeUnbilled
+  - CashInterestUnbilled
+  - EMIInterestUnbilled
+  - RetailInterestUnbilled
+  - CashPrincipalUnbilled
+  - EMIPrincipalUnbilled
+  - RetailPrincipalUnbilled
+  tieBreaker: FIFO
+  targetCategoryForExcessCredit: ExcessPayment

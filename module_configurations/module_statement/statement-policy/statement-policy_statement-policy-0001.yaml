@@ -1,0 +1,51 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: StatementPolicy
+metadata:
+  name: lsg.statement.statementpolicy.0001
+spec:
+  metadata:
+    id: statement.statementpolicy.0001
+    name: 0001 Statement Policies
+    description: 0001 Statement Policies
+    requester:
+      module: statement
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2000-01-01T23:09:01.795+07:00'
+  validTill: '2999-01-01T23:09:01.795+07:00'
+  name: Statement Policy
+  description: Statement  Policy
+  code: STMUS000001
+  physicalStatementThreshold: '0'
+  password: function password(context) { return 'password' }
+  statementTemplateCode: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.4.2/cw/templatev1.html
+  lockbox:
+    lockboxNumber: '1234'
+    lockboxAttributes:
+      - fieldName: accountNumber
+        include: Y
+        order: 1
+      - fieldName: minimumAmountDue
+        include: Y
+        order: 2
+      - fieldName: totalAmountDue
+        include: Y
+        order: 3
+      - fieldName: dueDate
+        include: Y
+        order: 4
+      - fieldName: checkDigit
+        include: Y
+        order: 5
+    encodingType: OCR A
+  metaData:
+    specialTemplateCodes:
+      VB: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.6.1/sparrow_v2/mail.html
+      VXL: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.6.1/sparrow_v2/mail.html
+    digitalPdfUrlExpiresInDays: '1'
+    digitalPdfUrlExpiresInHours: '2'
+    digitalPdfUrlExpiresInMinutes: '5'
+  skipStatementRules: function skipStatementRules(context) { var annualFeeValidation; if (context.baseFee != null && context.annualMembershipLevyDate > context.statementDate && context.annualMembershipLevyDate <= context.nextStatementDate && context.firstAnniversaryUsageDate > context.statementDate && context.firstAnniversaryUsageDate <= context.nextStatementDate) { annualFeeValidation = true; } else { annualFeeValidation = false; } if (!annualFeeValidation && context.totalClosingBalance == '0' && context.isPostingAvailable == 'false') { return true; } return false;}
+  forceStatementGenerationRules: function forceStatementGenerationRules(context) { return false; }
+  templateCode: us-credit

@@ -1,0 +1,100 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyStatementPolicy
+metadata:
+  name: lsg.ruby.rubystatementpolicy.3014
+spec:
+  metadata:
+    id: ruby.rubystatementpolicy.3014
+    name: 3014 Ruby Statement Policies
+    description: 3014 Ruby Statement Policies
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2000-01-01T23:09:01.795+07:00'
+  validTill: '2999-01-01T23:09:01.795+07:00'
+  name: Statement Policy
+  description: Statement Policy
+  code: STMUS003014
+  physicalStatementThreshold: '0'
+  graceDays: 0
+  payByHolidayTreatment: retainHoliday
+  dueDaysCalculationMethod: FixedDueDate
+  allowedStatementCycles:
+    - billingCycle: CYCUS00301401
+      dueDate: 24            
+    - billingCycle: CYCUS00301402
+      dueDate: 25            
+    - billingCycle: CYCUS00301403
+      dueDate: 26     
+    - billingCycle: CYCUS00301404
+      dueDate: 27     
+    - billingCycle: CYCUS00301405
+      dueDate: 28     
+    - billingCycle: CYCUS00301406
+      dueDate: 1     
+    - billingCycle: CYCUS00301407
+      dueDate: 2
+    - billingCycle: CYCUS00301408
+      dueDate: 3      
+    - billingCycle: CYCUS00301409
+      dueDate: 4    
+    - billingCycle: CYCUS00301410
+      dueDate: 5  
+    - billingCycle: CYCUS00301411
+      dueDate: 6      
+    - billingCycle: CYCUS00301412
+      dueDate: 7
+    - billingCycle: CYCUS00301413
+      dueDate: 8   
+    - billingCycle: CYCUS00301414
+      dueDate: 9
+    - billingCycle: CYCUS00301415
+      dueDate: 10
+    - billingCycle: CYCUS00301416
+      dueDate: 11
+    - billingCycle: CYCUS00301417
+      dueDate: 12
+    - billingCycle: CYCUS00301418
+      dueDate: 13
+    - billingCycle: CYCUS00301419
+      dueDate: 14
+    - billingCycle: CYCUS00301420
+      dueDate: 15
+    - billingCycle: CYCUS00301421
+      dueDate: 16
+    - billingCycle: CYCUS00301422
+      dueDate: 17
+    - billingCycle: CYCUS00301423
+      dueDate: 18
+    - billingCycle: CYCUS00301424
+      dueDate: 19
+    - billingCycle: CYCUS00301425
+      dueDate: 20
+    - billingCycle: CYCUS00301426
+      dueDate: 21
+    - billingCycle: CYCUS00301427
+      dueDate: 22
+    - billingCycle: CYCUS00301428
+      dueDate: 23   
+  password: function password(context) { return 'password' }
+  statementTemplateCode: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.0.65/sparrow/digital.html,https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.0.65/sparrow/mail.html
+  applyLateFeesOn: GRACE_DATE
+  valueDateOfLateFees: DUE_DATE
+  ytdSummaryEnabled: true
+  ytdSummaryStartDate: 1
+  ytdSummaryStartMonth: 1
+  isProbableLateFeeEnabled: true
+  isSchumerBoxEnabled: true
+  schumerMonthsToRepay: 36
+  isInterestBreakupEnabled: true
+  skipStatementRules: function skipStatementRules(context){ if(context.totalClosingBalance=='0' && context.isPostingAvailable=='false'){ return true; } return false; }
+  forceStatementGenerationRules: function forceStatementGenerationRules(context) { return false; }
+  yearlyCycle: CYCUS00301429
+  billingCycleChangeConfig:
+    coolOffDaysBetweenBillingCycleChange: 0
+    rules:
+      - maxLimit: 1
+        period: YEARLY
+  templateCode: us-credit

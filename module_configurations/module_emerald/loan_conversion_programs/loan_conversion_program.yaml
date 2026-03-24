@@ -1,0 +1,31 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: EmeraldAmortizationPolicy
+metadata:
+  name: lsg.emerald.emeraldamortizationpolicy.8001
+spec:
+  metadata:
+    id: emerald.emeraldamortizationpolicy.8001
+    name: Infinia COA Emerald Amortization Policies - Subprime US Market
+    description: Strict amortization policy for subprime credit card segment
+    requester:
+      module: emerald-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2010-04-01T00:00:00.000+05:30'
+  validTill: '2999-12-31T00:00:00.000+05:30'
+  name: Subprime Credit Card Amortization Policy - Strict
+  description: Strict amortization policy with weekly payments for subprime segment
+  code: EAPUS008001
+  epiMethod: REDUCING_BALANCE
+  installmentFrequency: WEEKLY  # Changed from MONTHLY
+  paymentType: ADVANCE  # Changed from ARREARS - upfront payments reduce risk
+  reAmortizationType: TENOR  # Changed from INSTALLMENT - more flexibility for subprime
+  brokenPeriodApplicable: true
+  reAmortizationMethod: WITH_INTEREST_CAPITALISATION  # Changed - interest capitalization for subprime
+  roundingRule: NEAR
+  emiAmountRoundingRule: NEAR
+  repaymentScheduleType: EPI
+  autoReAmortizationAllowed: false  # Changed from true
+  residualAmountValidationAllowed: true  # Changed from false
+  templateCode: us-credit-subprime-strict

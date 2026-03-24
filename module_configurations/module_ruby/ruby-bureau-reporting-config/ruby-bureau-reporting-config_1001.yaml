@@ -1,0 +1,44 @@
+kind: RubyBureauReportingConfig
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.tdr.rubybureaureportingconfig.module.1001
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_ruby/ruby-bureau-reporting-config/ruby-bureau-reporting-config_1001.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: tdr.rubybureaureportingconfig.module.1001
+    name: tdr.rubybureaureportingconfig.module.1001
+    description: tdr.rubybureaureportingconfig.module.1001
+    tenantId: '600309'
+    tenantCode: lsg
+  configs:
+    - key: MicroBilt/PRBC Program Identifier
+      value: MicroBilt PRBC Program Identifier
+    - key: Software Version Number
+      value: '1'
+    - key: Identification Number
+      value: '00000'
+    - key: Program Revision Date
+      value: '12052023'
+    - key: Reporter Telephone Number
+      value: '9211420786'
+    - key: Program Date
+      value: '12012023'
+    - key: Experian Program Identifier
+      value: '1234'
+    - key: IFI Identification Number
+      value: '5786453252'
+    - key: Innovis Program Identifier
+      value: '12345678'
+    - key: TransUnion Program Identifier
+      value: '78234562'
+    - key: Software Vendor Name
+      value: Zeta
+    - key: Equifax Program Identifier
+      value: '87654321'
+    - key: Reporter Address
+      value: Whitefield
+    - key: Reporter Name
+      value: Zeta

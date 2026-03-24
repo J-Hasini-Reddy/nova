@@ -1,0 +1,31 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: EmeraldAmortizationPolicy
+metadata:
+  name: lsg.emerald.emeraldamortizationpolicy.subprime_us
+spec:
+  metadata:
+    id: emerald.emeraldamortizationpolicy.subprime_us
+    name: Bank Xee Subprime US Credit Card Amortization Policy
+    description: Amortization policy for Bank Xee's US subprime credit card launch
+    requester:
+      module: emerald-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2026-04-01T00:00:00.000+05:30'
+  validTill: '2999-12-31T00:00:00.000+05:30'
+  name: Subprime Amortization Policy
+  description: Amortization Policy for Subprime US Credit Card
+  code: EAPUS_SUBPRIME
+  epiMethod: REDUCING_BALANCE
+  installmentFrequency: MONTHLY
+  paymentType: ARREARS
+  reAmortizationType: INSTALLMENT
+  brokenPeriodApplicable: true
+  reAmortizationMethod: WITHOUT_INTEREST_CAPITALISATION
+  roundingRule: NEAR
+  emiAmountRoundingRule: NEAR
+  repaymentScheduleType: EPI
+  autoReAmortizationAllowed: true
+  residualAmountValidationAllowed: false
+  templateCode: us-subprime-credit

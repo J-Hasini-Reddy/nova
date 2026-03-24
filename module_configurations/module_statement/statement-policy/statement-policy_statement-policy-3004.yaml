@@ -1,0 +1,251 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: StatementPolicy
+metadata:
+  name: lsg.statement.statementpolicy.3004
+spec:
+  metadata:
+    id: statement.statementpolicy.3004
+    name: 3004 Statement Generation Policies
+    description: 3004 Statement Generation Policies
+    requester:
+      module: statement
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2000-01-01T23:09:01.795+07:00'
+  validTill: '2999-01-01T23:09:01.795+07:00'
+  name: Statement Generation Policy
+  description: Statement Generation Policy
+  code: STMGEN003004
+  physicalStatementThreshold: '20'
+  password: function password(context) { return 'password' }
+  statementTemplateCode: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.4.2/cw/templatev1.html
+  lockbox:
+    lockboxNumber: '123456'
+    lockboxAttributes:
+      - fieldName: accountNumber
+        include: Y
+        order: 1
+      - fieldName: minimumAmountDue
+        include: Y
+        order: 2
+      - fieldName: totalAmountDue
+        include: Y
+        order: 3
+      - fieldName: dueDate
+        include: Y
+        order: 4
+      - fieldName: checkDigit
+        include: Y
+        order: 5
+    encodingType: OCR A
+  metaData:
+    specialTemplateCodes:
+      VB: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.6.1/sparrow_v2/mail.html
+      VXL: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.6.1/sparrow_v2/mail.html
+  skipStatementRules: function skipStatementRules(context) { var annualFeeValidation; if (context.baseFee != null && context.annualMembershipLevyDate > context.statementDate && context.annualMembershipLevyDate <= context.nextStatementDate && context.firstAnniversaryUsageDate > context.statementDate && context.firstAnniversaryUsageDate <= context.nextStatementDate) { annualFeeValidation = true; } else { annualFeeValidation = false; } if (!annualFeeValidation && context.totalClosingBalance == '0' && context.isPostingAvailable == 'false') { return true; } return false;}
+  forceStatementGenerationRules: function forceStatementGenerationRules(context) { return false; }
+  templateCode: us-credit
+  messageConfigs:
+    maxMessageCount: 1
+    defaultRule:
+      name: STATEMENT_PDF_MESSAGE
+      code: STMT_RULE_0
+      status: DISABLED
+      priority: 1
+      order: 1
+      condition: 'true'
+      content: Thank you for being a Sparrow customer! No additional notifications at this time.
+      frequency: EVERYTIME
+      metaData:
+        isSuppressed: true
+    ruleList:
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_1
+        status: DISABLED
+        priority: 2
+        order: 1
+        condition: input.dpd == 0 && input.accountLifeCycleStatus != 'CHARGED-OFF' && input.accountLifeCycleStatus != 'CLOSED' && input.accountClosureStatus == 'OPEN'
+        content: Thank you for being a Sparrow customer! No additional notifications at this time.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_2
+        status: ENABLED
+        priority: 9
+        order: 1
+        condition: input.delinquencyStatus == '2-CYCLE' || input.delinquencyStatus == '4-CYCLE' || input.delinquencyStatus == '5-CYCLE' || input.delinquencyStatus == '6-CYCLE'
+        content: It looks like your account is overdue. You can make a quick payment through our mobile app or reach out to Customer Service for help.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_3
+        status: DISABLED
+        priority: 2
+        order: 1
+        condition: input.dpd >= 90 && input.dpd < 180 && input.accountClosureStatus != 'OPEN'
+        content: Your account has been closed as a result of prolonged delinquency. You may continue to submit your payment through our mobile app or by contacting Customer Service.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_4
+        status: ENABLED
+        priority: 7
+        order: 1
+        condition: input.delinquencyStatus == '3-CYCLE' && input.accountClosureStatus == 'OPEN'
+        content: Your account is past due and will soon be permanently closed. Please make your payment right away to avoid losing the use of your Sparrow account.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_5
+        status: DISABLED
+        priority: 2
+        order: 1
+        condition: (input.accountClosureStatus == 'CLOSURE_ACCEPTED' || input.accountClosureStatus == 'CLOSURE_INITIATED' || input.accountClosureStatus == 'CLOSED') && !(input.balanceStatus == 'ZERO_BALANCE' || input.balanceStatus == 'CREDIT_BALANCE') && input.diffInDays >= 31 && input.dpd < 180
+        content: Your account is closed, no new transactions will be authorized. You must continue to make your monthly payments, and your account will continue to be subject to fees and interest, including the annual fee, until your remaining balance has been paid in full.
+        frequency: ONCE_IN_LIFE_TIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_6
+        status: ENABLED
+        priority: 2
+        order: 1
+        condition: input.dpd >= 180
+        content: Your account is seriously delinquent and will be charged-off. Please contact us immediately to make a payment. Your account may be subject to collections attempts even after we have charged it off.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: true
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_7
+        status: ENABLED
+        priority: 6
+        order: 1
+        condition: (input.accountClosureStatus == 'CLOSURE_ACCEPTED' || input.accountClosureStatus == 'CLOSURE_INITIATED') && (input.statementStartDate <= input.closureInitiatedBookDate || input.statementStartDate <= input.closureAcceptedBookDate) && (input.closureAcceptedBookDate <= input.statementEndDate || input.closureInitiatedBookDate <= input.statementEndDate) && !(input.balanceStatus == 'ZERO_BALANCE' || input.balanceStatus == 'CREDIT_BALANCE')
+        content: Your account is closed. You must continue to make monthly payments, and your account will continue to be subject to fees and interest until your balance has been paid in full.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_8
+        status: DISABLED
+        priority: 2
+        order: 1
+        condition: (input.accountClosureStatus == 'CLOSURE_ACCEPTED' || input.accountClosureStatus == 'CLOSURE_INITIATED' || input.accountClosureStatus == 'CLOSED') && ((input.statementStartDate <= input.closureAcceptedBookDate && input.closureAcceptedBookDate <= input.statementEndDate) || (input.statementStartDate <= input.closureInitiatedBookDate && input.closureInitiatedBookDate <= input.statementEndDate)) && !(input.balanceStatus == 'ZERO_BALANCE' || input.balanceStatus == 'CREDIT_BALANCE') && input.closureReason == 'CustomerRequest' && input.delinquencyStatus == '1-CYCLE' && input.statementStartDate <= input.delinquencyDueDate && input.delinquencyDueDate <= input.statementEndDate
+        content: Your account is past due, please make a payment as soon as possible. We may report information about your account to credit bureaus. Late payments, missed payments, or other defaults on your account may be reflected in your credit report. Your account has been closed at your request. Fees and interest, including the annual fee, will continue to be billed until your balance is paid in full.
+        frequency: ONCE_IN_LIFE_TIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_9
+        status: ENABLED
+        priority: 8
+        order: 1
+        condition: input.delinquencyStatus == '1-CYCLE' && input.statementStartDate <= input.delinquencyDueDate && input.delinquencyDueDate <= input.statementEndDate
+        content: Your account is past due, please make a payment right away. Late payments, missed payments, or other defaults may be reported to the credit bureaus.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_10
+        status: ENABLED
+        priority: 4
+        order: 1
+        condition: (input.accountClosureStatus == 'CLOSURE_ACCEPTED' || input.accountClosureStatus == 'CLOSURE_INITIATED') && (input.statementStartDate <= input.closureInitiatedBookDate || input.statementStartDate <= input.closureAcceptedBookDate) && (input.closureAcceptedBookDate <= input.statementEndDate || input.closureInitiatedBookDate <= input.statementEndDate) && (input.balanceStatus == 'ZERO_BALANCE' || input.balanceStatus == 'CREDIT_BALANCE') && input.closureReason == 'CustomerRequest'
+        content: We're sorry to see you go! Your account is closed and paid off.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_11
+        status: DISABLED
+        priority: 1
+        order: 1
+        condition: input.delinquencyStatus == '1-CYCLE' && input.baseFee!=null && input.accountClosureStatus != 'CLOSED' && input.isAddonCardsAvailable==false && input.firstAnniversaryUsageDate!=null && input.statementDate < input.firstAnniversaryUsageDate && input.firstAnniversaryUsageDate<=input.nextStatementDate && input.annualMembershipLevyDate!=null && input.statementDate<input.annualMembershipLevyDate && input.annualMembershipLevyDate<=input.nextStatementDate
+        content: Your account is past due. We may report information about your account to credit bureaus. Late payments, missed payments, or other defaults on your account may be reflected in your credit report. An annual fee of @{'$'}@{input.baseFee} (per month) will be billed to your account in the next billing cycle. For ways to avoid paying the fee, please refer to the IMPORTANT INFORMATION section of this statement.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_12
+        status: ENABLED
+        priority: 3
+        order: 1
+        condition: input.accountClosureStatus != 'CLOSED' && input.firstAnniversaryUsageDate!=null && input.statementDate < input.firstAnniversaryUsageDate && input.firstAnniversaryUsageDate<=input.nextStatementDate && input.annualMembershipLevyDate!=null && input.statementDate<input.annualMembershipLevyDate && input.annualMembershipLevyDate<=input.nextStatementDate && input.scraStatus != 'ACTIVE' && !(input.bankruptcyStatusValue == 'BankruptcyInitiated' || input.bankruptcyStatusValue == 'BankruptcyDischarged')
+        content: An annual fee of @{'$'}@{input.baseFee} (per month) will be billed to your account in the next billing cycle. For ways to avoid paying the fee, please refer to the "IMPORTANT INFORMATION" section of this statement.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_13
+        status: DISABLED
+        priority: 1
+        order: 1
+        condition: input.isAddonCardsAvailable==true && input.baseFee!=null && input.annualMembershipLevyDate!=null && input.statementDate<input.annualMembershipLevyDate && input.annualMembershipLevyDate<=input.nextStatementDate
+        content: YOUR ACCOUNT HAS AN ANNUAL FEE THAT IS BILLED MONTHLY. THE @{'$'}@{input.baseFee} (PLUS 1.00 FOR EACH ADDITIONAL CARD ISSUED ON YOUR ACCOUNT) MONTHLY PORTION OF YOUR ANNUAL FEE WILL BE BILLED ON YOUR NEXT PERIODIC STATEMENT. SEE REVERSE SIDE FOR IMPORTANT RENEWAL INFORMATION
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_14
+        status: ENABLED
+        priority: 1
+        order: 1
+        condition: (input.bankruptcyStatusValue == 'BankruptcyInitiated' || input.bankruptcyStatusValue == 'BankruptcyDischarged')
+        content: Our records reflect that you are a debtor in an active bankruptcy case. This statement is for informational and compliance purposes only. It is not an attempt to collect a debt.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: true
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_15
+        status: ENABLED
+        priority: 5
+        order: 1
+        condition: (input.accountClosureStatus == 'CLOSURE_ACCEPTED' || input.accountClosureStatus == 'CLOSURE_INITIATED') && (input.statementStartDate <= input.closureInitiatedBookDate || input.statementStartDate <= input.closureAcceptedBookDate) && (input.closureAcceptedBookDate <= input.statementEndDate || input.closureInitiatedBookDate <= input.statementEndDate) && (input.balanceStatus == 'ZERO_BALANCE' || input.balanceStatus == 'CREDIT_BALANCE') && input.closureReason != 'CustomerRequest'
+        content: Your account is closed and paid off.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_16
+        status: ENABLED
+        priority: 2
+        order: 1
+        condition: (input.accountClosureStatus == 'OPEN')
+        content: Your account is OPEN.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+  schumerBoxConfig:
+    schumerMonthsToRepay:
+      - 6
+      - 12
+    showTotalCostOnMinimumPayment: true
+    showPaymentWarning: true
+  rateChangeSummaryConfig:
+    showRateChangeSummary: false
+  estimatedInterestConfig:
+    estimatedInterestBreakDownCount: 2
+  interestBreakupConfig:
+    allowedBalanceTypes:
+      - retail
+      - cash
+    allowedPromotionalBalanceTypes:
+      - retail
+  cardBasedTransactionConfig:
+    allowedVoucherCodes:
+      - CONVERSION_LOAN_BOOKING
+      - CONVERSION_LOAN_PRE_CLOSURE
+      - CONVERSION_LOAN_CANCELLATION
+      - CONVERSION_LOAN_INSTALLMENT_BILLING
+  rewardConfig:
+    showSummary: false
+    showIssuance: false
+    showStatement: false
+  paymentInstrumentConfig:
+    allowStatementGenerationWithoutCardFormFactor: false
+    isAddOn: false

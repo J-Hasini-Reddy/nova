@@ -1,0 +1,51 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: CreditAllocationSpec
+metadata:
+  name: lsg.auraapps.module.creditallocationspec.credit.impacting.principal.debits
+  annotations: null
+  labels:
+    module: auraapps
+    rrsd.zetaapps.in/space: aws-default-pp-mumbai
+  namespace: auraapps
+spec:
+  metadata:
+    id: auraapps.module.creditallocationspec.credit.impacting.principal.debits
+    name: credit allocation spec for credits impacting principal debits
+    description: credit allocation spec
+    tenantId: '600309'
+    tenantCode: lsg
+  code: CREDITS_IMPACTING_PRINCIPAL_DEBITS_wf
+  flags:
+    allocateToCategoryType: true
+    shouldMADBeKnockedOff: false
+  allocationSequence:
+  - InsufficientFundFeeBilled
+  - LateFeeBilled
+  - OverlimitFeeBilled
+  - CollectionFeeBilled
+  - CashAdvanceFeeBilled
+  - RetailMiscFeeBilled
+  - RetailServiceFeeBilled
+  - AnnualFeeBilled
+  - CashInterestBilled
+  - EMIInterestBilled
+  - RetailInterestBilled
+  - CashPrincipalBilled
+  - EMIPrincipalBilled
+  - RetailPrincipalBilled
+  - LateFeeUnbilled
+  - InsufficientFundFeeUnbilled
+  - OverlimitFeeUnbilled
+  - CollectionFeeUnbilled
+  - CashAdvanceFeeUnbilled
+  - RetailMiscFeeUnbilled
+  - RetailServiceFeeUnbilled
+  - AnnualFeeUnbilled
+  - CashInterestUnbilled
+  - EMIInterestUnbilled
+  - RetailInterestUnbilled
+  - CashPrincipalUnbilled
+  - EMIPrincipalUnbilled
+  - RetailPrincipalUnbilled
+  tieBreaker: FIFO
+  targetCategoryForExcessCredit: ExcessPayment

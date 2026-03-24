@@ -1,0 +1,52 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyStatementPolicy
+metadata:
+  name: lsg.ruby.rubystatementpolicy.4002
+spec:
+  metadata:
+    id: ruby.rubystatementpolicy.4002
+    name: 4002 Ruby Statement Policies Sparrow
+    description: 4002 Ruby Statement Policies Sparrow
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2000-01-01T23:09:01.795+07:00'
+  validTill: '2888-01-01T23:09:01.795+07:00'
+  name: Statement Policy Sparrow
+  description: Statement Policy Sparrow
+  code: STMUS004002
+  physicalStatementThreshold: '0'
+  graceDays: 0
+  payByHolidayTreatment: retainHoliday
+  dueDaysCalculationMethod: DueDays
+  dueDays: 2
+  allowedStatementCycles:
+    - billingCycle: CYCUS00400201
+    - billingCycle: CYCUS00400202
+    - billingCycle: CYCUS00400203
+    - billingCycle: CYCUS00400204
+    - billingCycle: CYCUS00400205
+    - billingCycle: CYCUS00400206
+    - billingCycle: CYCUS00400207
+  password: function password(context) { return 'password' }
+  statementTemplateCode: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.0.82/sparrow/digital.html,https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.0.82/sparrow/mail.html
+  applyLateFeesOn: GRACE_DATE
+  valueDateOfLateFees: DUE_DATE
+  ytdSummaryEnabled: true
+  ytdSummaryStartDate: 1
+  ytdSummaryStartMonth: 1
+  isProbableLateFeeEnabled: true
+  forceStatementGenerationRules: function forceStatementGenerationRules(context) { return false; }
+  skipStatementRules: function skipStatementRules(context) { var annualFeeValidation; if (context.baseFee != null && context.annualMembershipLevyDate > context.statementDate && context.annualMembershipLevyDate <= context.nextStatementDate && context.firstAnniversaryUsageDate > context.statementDate && context.firstAnniversaryUsageDate <= context.nextStatementDate) { annualFeeValidation = true; } else { annualFeeValidation = false; } if (!annualFeeValidation && context.totalClosingBalance == '0' && context.isPostingAvailable == 'false') { return true; } return false;}
+  isSchumerBoxEnabled: true
+  schumerMonthsToRepay: 36
+  isInterestBreakupEnabled: true
+  yearlyCycle: CYCUS00400208
+  billingCycleChangeConfig:
+    coolOffDaysBetweenBillingCycleChange: 180
+    rules:
+      - maxLimit: 1
+        period: YEARLY
+  templateCode: us-credit

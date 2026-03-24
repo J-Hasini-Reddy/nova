@@ -1,0 +1,52 @@
+kind: RubyCreditBureauReportingPolicy
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.ruby.rubycreditbureaureportingpolicy.module.7001
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_ruby/credit-bureau-reporting-policies/ruby-credit-bureau-reporting-policy_7001.yaml","tenantCode":"lsg"}'
+  namespace: ruby
+spec:
+  metadata:
+    id: ruby.rubycreditbureaureportingpolicy.module.7001
+    name: ruby.rubycreditbureaureportingpolicy.module.7001
+    description: ruby.rubycreditbureaureportingpolicy.module.7001
+    tenantId: '600309'
+    tenantCode: lsg
+  name: Ruby Credit Bureau Reporting Policy
+  code: CBRUK007001
+  description: Ruby Credit Bureau Reporting Policy
+  provider: ruby
+  reportToCreditBureau: true
+  frequencyOfReporting: BILLING_CYCLE
+  restrictedStatusesForBureauReporting:
+    - tag://accountClosureStatus/LEVEL_3
+  accountClosureReporting:
+    status: CLOSURE_INITIATED
+  immediateReportNewOpenedAccount: true
+  addressPreference:
+    - permanent
+    - billing
+  immediateReportingForTerminalStatus:
+    - tagUri: tag://autoChargeOffStatus/LEVEL_2
+      applicableField: finalChargeOffDate
+      source: account
+    - tagUri: tag://manualChargeOffStatus/LEVEL_2
+      applicableField: finalChargeOffDate
+      source: account
+    - tagUri: tag://tradeline/LEVEL_0
+      applicableField: deletionDate
+      source: account
+    - tagUri: tag://bankruptcy/BankruptcyDischarged
+      applicableField: bankruptcy_effective_date
+      source: accountholder
+    - tagUri: tag://deceased/Y
+      applicableField: deceased_status_effective_date
+      source: accountholder
+  associatedConsumerReporting:
+    relationshipTypes:
+      - SPOUSE
+  validFrom: '2000-01-01T00:00:00.000+01:00'
+  validTill: '2099-01-01T00:00:00.000+01:00'
+  templateCode: us-credit

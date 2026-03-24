@@ -1,0 +1,28 @@
+kind: DiaUser
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.statement.diauser.statement-sftp
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+spec:
+  applicationName: statement
+  metadata:
+    id: statement.diauser.statement-sftp
+    name: Statement SFTP User
+    description: Statement SFTP User
+    requester:
+      module: dia
+      moduleVersion: 1.0.0
+    tenantId: '600309'
+    tenantCode: lsg
+  rbac:
+    identity: dia-sftp-user
+    publicKey: dia-sftp-user
+    resource: dia-sftp-user
+  storageMount:
+    - mount: /statement_s3/
+      permissions:
+        - '*'
+      storageName: statement-sftp
+  type: SYSTEM_USER
+  userName: statement-sftp

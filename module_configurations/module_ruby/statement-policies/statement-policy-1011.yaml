@@ -1,0 +1,50 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyStatementPolicy
+metadata:
+  name: lsg.ruby.rubystatementpolicy.1011
+spec:
+  metadata:
+    id: ruby.rubystatementpolicy.1011
+    name: 1011 Ruby Statement Policies
+    description: 1011 Ruby Statement Policies
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2015-07-25T23:09:01.795+07:00'
+  validTill: '2099-07-25T23:09:01.795+07:00'
+  name: Statement Policy
+  description: Statement Policy
+  code: STMIN001011
+  physicalStatementThreshold: '0'
+  graceDays: 0
+  payByHolidayTreatment: retainHoliday
+  dueDaysCalculationMethod: FixedDueDate
+  allowedStatementCycles:
+    - billingCycle: CYCIN00101101
+      dueDate: 1
+    - billingCycle: CYCIN00101102
+      dueDate: 2
+    - billingCycle: CYCIN00101103
+      dueDate: 3
+    - billingCycle: CYCIN00101104
+      dueDate: 4
+    - billingCycle: CYCIN00101105
+      dueDate: 5
+    - billingCycle: CYCIN00101106
+      dueDate: 6
+    - billingCycle: CYCIN00101107
+      dueDate: 7
+  password: function password(context) { return 'password' }
+  statementTemplateCode: https://hercules-assets.internal.us2.zetaapps.in/statement-templates/3.0.16/sparrow/digital.html
+  applyLateFeesOn: GRACE_DATE
+  valueDateOfLateFees: DUE_DATE
+  ytdSummaryEnabled: true
+  ytdSummaryStartDate: 1
+  ytdSummaryStartMonth: 1
+  isProbableLateFeeEnabled: true
+  isSchumerBoxEnabled: true
+  schumerMonthsToRepay: 36
+  isInterestBreakupEnabled: true
+  templateCode: us-credit

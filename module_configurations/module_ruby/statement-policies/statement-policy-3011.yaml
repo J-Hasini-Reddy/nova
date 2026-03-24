@@ -1,0 +1,58 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyStatementPolicy
+metadata:
+  name: lsg.ruby.rubystatementpolicy.3011
+spec:
+  metadata:
+    id: ruby.rubystatementpolicy.3011
+    name: 3011 Ruby Statement Policies
+    description: 3011 Ruby Statement Policies
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2000-01-01T23:09:01.795+07:00'
+  validTill: '2999-01-01T23:09:01.795+07:00'
+  name: Statement Policy
+  description: Statement Policy
+  code: STMUS003011
+  physicalStatementThreshold: '0'
+  graceDays: 0
+  payByHolidayTreatment: retainHoliday
+  dueDaysCalculationMethod: FixedDueDate
+  allowedStatementCycles:
+    - billingCycle: CYCUS00301101
+      dueDate: 1
+    - billingCycle: CYCUS00301102
+      dueDate: 2
+    - billingCycle: CYCUS00301103
+      dueDate: 3
+    - billingCycle: CYCUS00301104
+      dueDate: 4
+    - billingCycle: CYCUS00301105
+      dueDate: 5
+    - billingCycle: CYCUS00301106
+      dueDate: 6
+    - billingCycle: CYCUS00301107
+      dueDate: 7
+  password: function password(context) { return 'password' }
+  statementTemplateCode: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.0.65/sparrow/digital.html,https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.0.65/sparrow/mail.html
+  applyLateFeesOn: GRACE_DATE
+  valueDateOfLateFees: DUE_DATE
+  ytdSummaryEnabled: true
+  ytdSummaryStartDate: 1
+  ytdSummaryStartMonth: 1
+  isProbableLateFeeEnabled: true
+  isSchumerBoxEnabled: true
+  schumerMonthsToRepay: 36
+  isInterestBreakupEnabled: true
+  skipStatementRules: function skipStatementRules(context){ if(context.totalClosingBalance=='0' && context.isPostingAvailable=='false'){ return true; } return false; }
+  forceStatementGenerationRules: function forceStatementGenerationRules(context) { return false; }
+  yearlyCycle: CYCUS00301108
+  billingCycleChangeConfig:
+    coolOffDaysBetweenBillingCycleChange: 0
+    rules:
+      - maxLimit: 1
+        period: YEARLY
+  templateCode: us-credit

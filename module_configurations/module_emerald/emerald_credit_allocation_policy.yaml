@@ -1,0 +1,23 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: EmeraldCreditAllocationPolicy
+metadata:
+  name: lsg.emerald.emeraldcreditallocationpolicy.subprime_us
+spec:
+  metadata:
+    id: emerald.emeraldcreditallocationpolicy.subprime_us
+    name: EmeraldCreditAllocationPolicy Subprime US
+    description: Credit allocation policy for Bank Xee subprime US credit card launch
+    requester:
+      module: emerald-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2026-03-24T00:00:00.000+05:30'  
+  validTill: '2999-12-31T00:00:00.000+05:30'
+  name: Loan Credit Allocation Policy
+  description: Loan Credit Allocation Policy
+  code: ECAPUS_SUBPRIME
+  programs:
+    - code: ELCPROGUS_SUBPRIME
+      precedenceScore: 100
+  templateCode: us-credit

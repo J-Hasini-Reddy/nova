@@ -1,0 +1,47 @@
+kind: CreditAllocationProgram
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.auraapps.creditallocationprogram.module.cardworksuat-credit-impacting-fee
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+    module: auraapps
+    rrsd.zetaapps.in/space: aws-default-pp-mumbai
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_auraapps/credit-allocation-program/credit-allocation-program_cardworksuat-credit-impacting-fee.yaml","tenantCode":"lsg"}'
+  namespace: auraapps
+spec:
+  metadata:
+    id: auraapps.creditallocationprogram.module.cardworksuat-credit-impacting-fee
+    name: auraapps.creditallocationprogram.module.cardworksuat-credit-impacting-fee
+    description: auraapps.creditallocationprogram.module.cardworksuat-credit-impacting-fee
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    isEncrypted: false
+    key: key
+    schemaInlineContent: '{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "name": {      "type": "string"    },    "lienMarkedDebitPosting": {      "type": "boolean"    },    "directed": {      "type": "boolean"    },    "voucherCodes": {      "type": "array",      "items": [        {          "type": "string"        },        {          "type": "string"        },        {          "type": "string"        },        {          "type": "string"        },        {          "type": "string"        }      ]    },    "description": {      "type": "string"    },    "precedenceCode": {      "type": "string"    },    "code": {      "type": "string"    },    "accountStatus": {      "type": "array",      "items": [        {          "type": "object",          "properties": {            "name": {              "type": "string"            },            "status": {              "type": "string"            },            "finalChargeOffDate": {              "type": "string"            },            "type": {              "type": "string"            },            "reasonCode": {              "type": "string"            },            "tagTypeCode": {              "type": "string"            }          },          "required": [            "name",            "status",            "finalChargeOffDate",            "type",            "reasonCode",            "tagTypeCode"          ]        },        {          "type": "object",          "properties": {            "name": {              "type": "string"            },            "status": {              "type": "string"            },            "finalChargeOffDate": {              "type": "string"            },            "type": {              "type": "string"            },            "reasonCode": {              "type": "string"            },            "tagTypeCode": {              "type": "string"            }          },          "required": [            "name",            "status",            "finalChargeOffDate",            "type",            "reasonCode",            "tagTypeCode"          ]        }      ]    },    "validUntil": {      "type": "string"    },    "validFrom": {      "type": "string"    },    "status": {      "type": "string"    },    "billed": {      "type": "boolean"    },    "isBookDateGreaterThanLastStatementDatePlusXDays": {      "type": "boolean"    },    "daysAfterLastStatementDate": {      "type": "integer"    }  },  "required": [    "name",    "lienMarkedDebitPosting",    "directed",    "voucherCodes",    "description",    "precedenceCode",    "code",    "accountStatus",    "validUntil",    "validFrom",    "status"  ]}'
+    schemaUrl: http://localhost
+    useVault: false
+    value:
+      accountStatus: []
+      directed: true
+      code: CRAUS005001
+      creditAllocationSpecification:
+        code: CRSUS005001
+        version: 1
+      description: Credit Impacting Fee
+      lienMarkedDebitPosting: false
+      name: Credit Impacting Fee
+      precedenceCode: '40'
+      status: ENABLED
+      validFrom: '2000-01-01T00:00:00.000-05:00'
+      validUntil: '2999-01-01T00:00:00.000-05:00'
+      voucherCodes:
+      - CASH_ADVANCE_FEE_REVERSAL
+      - FOREX_MARKUP_REVERSAL
+      - RUBY_ANNUAL_FEE_REVERSAL
+      - LATE_CHARGE_REVERSAL
+      - OVERLIMIT_FEE_REVERSAL
+      - LATE_FEE_CREDIT_ADJUSTMENT
+      - INTEREST_CREDIT_ADJUSTMENT

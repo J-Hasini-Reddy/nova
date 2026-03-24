@@ -1,0 +1,35 @@
+kind: CreditAllocationPolicy
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.auraapps.creditallocationpolicy.module.7001
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+    module: auraapps
+    rrsd.zetaapps.in/space: aws-default-pp-mumbai
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_auraapps/credit-allocation-policy/credit-allocation-policy_7001.yaml","tenantCode":"lsg"}'
+  namespace: auraapps
+spec:
+  metadata:
+    id: auraapps.creditallocationpolicy.module.7001
+    name: auraapps.creditallocationpolicy.module.7001
+    description: auraapps.creditallocationpolicy.module.7001
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2000-01-01T00:00:00.000+01:00'
+  validTill: '2099-01-01T00:00:00.000+01:00'
+  name: Credit Allocation Policy
+  description: Ruby Credit Allocation Policy
+  code: CROUK007001
+  programs:
+  - code: CRAUS005002
+    precedenceScore: '10'
+  - code: CRAUS005003
+    precedenceScore: '20'
+  - code: CRAUS005004
+    precedenceScore: '30'
+  - code: CRAUS005001
+    precedenceScore: '40'
+  templateCode: us-credit
+  viewConfig:
+    displayName: credit-allocation-policy-7001

@@ -1,0 +1,126 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyStatementPolicy
+metadata:
+  name: lsg.ruby.rubystatementpolicy.3003
+spec:
+  metadata:
+    id: ruby.rubystatementpolicy.3003
+    name: 3003 Ruby Statement Policies
+    description: 3003 Ruby Statement Policies 3003
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2000-01-01T23:09:01.795+07:00'
+  validTill: '2999-01-01T23:09:01.795+07:00'
+  name: Statement Policy
+  description: Statement Policy
+  code: STMUS003003
+  physicalStatementThreshold: '0'
+  graceDays: 0
+  payByHolidayTreatment: retainHoliday
+  dueDaysCalculationMethod: FixedDueDate
+  allowedStatementCycles:
+    - billingCycle: CYCUS00300301
+      dueDate: 1
+    - billingCycle: CYCUS00300302
+      dueDate: 2
+    - billingCycle: CYCUS00300303
+      dueDate: 3
+    - billingCycle: CYCUS00300304
+      dueDate: 4
+    - billingCycle: CYCUS00300305
+      dueDate: 5
+    - billingCycle: CYCUS00300306
+      dueDate: 6
+    - billingCycle: CYCUS00300307
+      dueDate: 7
+    - billingCycle: CYCUS00300308
+      dueDate: 8
+    - billingCycle: CYCUS00300309
+      dueDate: 9
+    - billingCycle: CYCUS00300310
+      dueDate: 10
+    - billingCycle: CYCUS00300311
+      dueDate: 11
+    - billingCycle: CYCUS00300312
+      dueDate: 12
+    - billingCycle: CYCUS00300313
+      dueDate: 13
+    - billingCycle: CYCUS00300314
+      dueDate: 14
+    - billingCycle: CYCUS00300315
+      dueDate: 15
+    - billingCycle: CYCUS00300316
+      dueDate: 16
+    - billingCycle: CYCUS00300317
+      dueDate: 17
+    - billingCycle: CYCUS00300318
+      dueDate: 18
+    - billingCycle: CYCUS00300319
+      dueDate: 19
+    - billingCycle: CYCUS00300320
+      dueDate: 20
+    - billingCycle: CYCUS00300321
+      dueDate: 21
+    - billingCycle: CYCUS00300322
+      dueDate: 22
+    - billingCycle: CYCUS00300323
+      dueDate: 23
+    - billingCycle: CYCUS00300324
+      dueDate: 24
+    - billingCycle: CYCUS00300325
+      dueDate: 25
+    - billingCycle: CYCUS00300326
+      dueDate: 26
+    - billingCycle: CYCUS00300327
+      dueDate: 27
+    - billingCycle: CYCUS00300328
+      dueDate: 28
+  password: function password(context) { return 'password' }
+  statementTemplateCode: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.7.2/cw/templatev1.html
+  applyLateFeesOn: GRACE_DATE
+  valueDateOfLateFees: DUE_DATE
+  ytdSummaryEnabled: true
+  ytdSummaryStartDate: 1
+  ytdSummaryStartMonth: 1
+  isProbableLateFeeEnabled: true
+  isSchumerBoxEnabled: true
+  schumerMonthsToRepay: 36
+  isInterestBreakupEnabled: true
+  lockbox:
+    lockboxNumber: '123456'
+    lockboxAttributes:
+      - fieldName: accountNumber
+        include: Y
+        order: 1
+      - fieldName: minimumAmountDue
+        include: Y
+        order: 2
+      - fieldName: totalAmountDue
+        include: Y
+        order: 3
+      - fieldName: dueDate
+        include: Y
+        order: 4
+      - fieldName: checkDigit
+        include: Y
+        order: 5
+    encodingType: OCR A
+  metaData:
+    specialTemplateCodes:
+      VB: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.6.11/sparrow_v2/mail.html
+      VXL: https://hercules-assets.mum1-pp.zetaapps.in/statement-templates/3.6.11/sparrow_v2/mail.html
+    digitalPdfUrlExpiresInDays: '1'
+    digitalPdfUrlExpiresInHours: '2'
+    digitalPdfUrlExpiresInMinutes: '5'
+  skipStatementRules: function skipStatementRules(context) { var annualFeeValidation; if (context.baseFee != null && context.annualMembershipLevyDate > context.statementDate && context.annualMembershipLevyDate <= context.nextStatementDate && context.firstAnniversaryUsageDate > context.statementDate && context.firstAnniversaryUsageDate <= context.nextStatementDate) { annualFeeValidation = true; } else { annualFeeValidation = false; } if (!annualFeeValidation && context.totalClosingBalance == '0' && context.isPostingAvailable == 'false') { return true; } return false;}
+  forceStatementGenerationRules: function forceStatementGenerationRules(context) { return false; }
+  yearlyCycle: CYCUS00300329
+  billingCycleChangeConfig:
+    coolOffDaysBetweenBillingCycleChange: 0
+    rules:
+      - maxLimit: 1
+        period: YEARLY
+  templateCode: us-credit

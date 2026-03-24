@@ -1,0 +1,43 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: CreditAllocationSpec
+metadata:
+  name: lsg.auraapps.configuration.module.cardworksuat.dispute-credit-allocation-unbilled.creditallocationspec
+  annotations: null
+  labels:
+    module: auraapps
+    rrsd.zetaapps.in/space: aws-default-pp-mumbai
+  namespace: auraapps
+spec:
+  metadata:
+    id: auraapps.configuration.module.cardworksuat.dispute-credit-allocation-unbilled.creditallocationspec
+    name: credit allocation spec 5004
+    description: credit allocation spec 5004
+    tenantId: '600309'
+    tenantCode: lsg
+  code: CRSUS005004
+  flags:
+    allocateToCategoryType: false
+    shouldMADBeKnockedOff: false
+  allocationSequence:
+  - CashInterestBilled
+  - CashInterestUnbilled
+  - CashPrincipalBilled
+  - CashPrincipalUnbilled
+  - InsufficientFundFeeBilled
+  - InsufficientFundFeeUnbilled
+  - RetailServiceFeeBilled
+  - RetailServiceFeeUnbilled
+  - LateFeeBilled
+  - LateFeeUnbilled
+  - RetailMiscFeeBilled
+  - RetailMiscFeeUnbilled
+  - AnnualFeeBilled
+  - AnnualFeeUnbilled
+  - RetailInterestBilled
+  - RetailInterestUnbilled
+  - RetailPrincipalBilled
+  - RetailPrincipalUnbilled
+  - CashAdvanceFeeBilled
+  - CashAdvanceFeeUnbilled
+  tieBreaker: FIFO
+  targetCategoryForExcessCredit: ExcessPayment

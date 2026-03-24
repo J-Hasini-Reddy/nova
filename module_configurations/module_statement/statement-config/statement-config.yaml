@@ -1,0 +1,20 @@
+kind: StatementConfig
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.statement.statementconfig.config
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  namespace: statement
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"/.defaults/module_configurations/module_statement/tree/root/t0/module_configurations/module_statement/statement-config/statement-config.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: statement.statementconfig.config
+    name: config
+    description: Sample StatementConfig
+    requester:
+      module: statement
+      moduleVersion: 1.0.0
+    tenantId: '600309'
+    tenantCode: lsg
+  templateCode: us-credit

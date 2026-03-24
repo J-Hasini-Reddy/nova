@@ -1,0 +1,18 @@
+kind: DiaStorage
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.statement.diastorage.statement-sftp
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+spec:
+  metadata:
+    id: statement.diastorage.statement-sftp
+    name: Statement SFTP Storage
+    description: Statement SFTP Storage
+    tenantId: '600309'
+    tenantCode: lsg
+  isDefault: false
+  sftpParameters:
+    deltaURN: zrn:zeta:delta:SFTP:aws-default-pp-mumbai:600309:statement-sftp
+  storageName: statement-sftp
+  type: SFTP

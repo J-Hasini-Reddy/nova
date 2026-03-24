@@ -1,0 +1,49 @@
+kind: CreditAllocationProgram
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.auraapps.creditallocationprogram.module.dispute-credit-allocation-unbilled
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+    module: auraapps
+    rrsd.zetaapps.in/space: aws-default-pp-mumbai
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_auraapps/credit-allocation-program/credit-allocation-program_dispute-credit-allocation-unbilled.yaml","tenantCode":"lsg"}'
+  namespace: auraapps
+spec:
+  metadata:
+    id: auraapps.creditallocationprogram.module.dispute-credit-allocation-unbilled
+    name: auraapps.creditallocationprogram.module.dispute-credit-allocation-unbilled
+    description: auraapps.creditallocationprogram.module.dispute-credit-allocation-unbilled
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    isEncrypted: false
+    key: key
+    schemaInlineContent: '{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "name": {      "type": "string"    },    "lienMarkedDebitPosting": {      "type": "boolean"    },    "directed": {      "type": "boolean"    },    "voucherCodes": {      "type": "array",      "items": [        {          "type": "string"        },        {          "type": "string"        },        {          "type": "string"        },        {          "type": "string"        },        {          "type": "string"        }      ]    },    "description": {      "type": "string"    },    "precedenceCode": {      "type": "string"    },    "code": {      "type": "string"    },    "accountStatus": {      "type": "array",      "items": [        {          "type": "object",          "properties": {            "name": {              "type": "string"            },            "status": {              "type": "string"            },            "finalChargeOffDate": {              "type": "string"            },            "type": {              "type": "string"            },            "reasonCode": {              "type": "string"            },            "tagTypeCode": {              "type": "string"            }          },          "required": [            "name",            "status",            "finalChargeOffDate",            "type",            "reasonCode",            "tagTypeCode"          ]        },        {          "type": "object",          "properties": {            "name": {              "type": "string"            },            "status": {              "type": "string"            },            "finalChargeOffDate": {              "type": "string"            },            "type": {              "type": "string"            },            "reasonCode": {              "type": "string"            },            "tagTypeCode": {              "type": "string"            }          },          "required": [            "name",            "status",            "finalChargeOffDate",            "type",            "reasonCode",            "tagTypeCode"          ]        }      ]    },    "validUntil": {      "type": "string"    },    "validFrom": {      "type": "string"    },    "status": {      "type": "string"    },    "billed": {      "type": "boolean"    },    "isBookDateGreaterThanLastStatementDatePlusXDays": {      "type": "boolean"    },    "daysAfterLastStatementDate": {      "type": "integer"    }  },  "required": [    "name",    "lienMarkedDebitPosting",    "directed",    "voucherCodes",    "description",    "precedenceCode",    "code",    "accountStatus",    "validUntil",    "validFrom",    "status"  ]}'
+    schemaUrl: http://localhost
+    useVault: false
+    value:
+      accountStatus: []
+      billed: false
+      directed: true
+      code: CRAUS001003
+      creditAllocationSpecification:
+        code: CRSUS001003
+        version: 1
+      description: Dispute Credit Allocation Unbilled
+      lienMarkedDebitPosting: false
+      name: Dispute Credit Allocation Unbilled
+      precedenceCode: '30'
+      status: ENABLED
+      validFrom: '2000-01-01T00:00:00.000+07:00'
+      validUntil: '2999-12-31T00:00:00.000+07:00'
+      voucherCodes:
+      - DISPUTE-PROV-CREDIT
+      - DISPUTE-PERM-CREDIT
+      - DISPUTE-CB-MERCHANT-ACCEPT
+      - DISPUTE-CB-ISSUER-ACCEPT
+      - DISPUTE-ARB-MERCHANT-ACCEPT
+      - DISPUTE-ARB-ISSUER-ACCEPT
+      - FRAUD-ISSUER-ACCEPT
+      - DISPUTE-WRITEOFF

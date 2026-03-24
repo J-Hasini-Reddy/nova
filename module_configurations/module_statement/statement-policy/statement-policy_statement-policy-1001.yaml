@@ -1,0 +1,67 @@
+kind: StatementPolicy
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lumenpp.statement.statementpolicy.1001
+spec:
+  metadata:
+    id: statement.statementpolicy.1001
+    name: 1001 Statement Generation Policies
+    description: 1001 Statement Generation Policies
+    requester:
+      module: statement
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lumenpp
+  validFrom: '2010-01-01T00:00:00.000-07:00'
+  validTill: '2999-12-31T00:00:00.000-07:00'
+  name: Statement Generation Policy
+  description: Statement Generation Policy
+  code: STMGENUK001001
+  templateCode: us-credit
+  messageConfigs:
+    maxMessageCount: 2
+    defaultRule:
+      name: STATEMENT_PDF_MESSAGE
+      code: STMT_RULE_0
+      status: DISABLED
+      priority: 1
+      order: 1
+      condition: 'true'
+      content: Thank you for being a Sparrow customer! No additional notifications at this time.
+      frequency: EVERYTIME
+      metaData:
+        isSuppressed: true
+    ruleList:
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_1
+        status: ENABLED
+        priority: 1
+        order: 1
+        condition: input.accountClosureStatus == 'CLOSURE_ACCEPTED' || input.accountClosureStatus == 'CLOSED'
+        content: You can no longer use your card but there is a balance outstanding and you still need to pay off your account. Interest will continue to accrue.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+          messageHeader: Your account is closed
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_2
+        status: ENABLED
+        priority: 2
+        order: 1
+        condition: input.delinquencyStatus == '1-CYCLE' || input.delinquencyStatus == '2-CYCLE' || input.delinquencyStatus == '3-CYCLE'
+        content: Failing to make your minimum payment can mean that you have broken the terms of this credit agreement and could result in us taking legal action against you. It could lead to your having to pay additional costs and make it more difficult for you to obtain credit in future.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+          messageHeader: You have failed to make a minimum payment
+      - name: STATEMENT_PDF_MESSAGE
+        code: STMT_RULE_3
+        status: ENABLED
+        priority: 3
+        order: 1
+        condition: input.balanceStatus == 'APPROVED_OVERLIMIT' || input.balanceStatus == 'CRITICALLY_OVERLIMIT'
+        content: Exceeding your credit limit will result in additional charges, as outlined in your credit agreement. To bring your account back within its limit, please make the minimum payment indicated. You may not be able to use your card until your balance is within the agreed limit.
+        frequency: EVERYTIME
+        metaData:
+          isSuppressed: false
+          messageHeader: You have exceeded your credit limit

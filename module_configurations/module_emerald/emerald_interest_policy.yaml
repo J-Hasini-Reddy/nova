@@ -1,0 +1,48 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: EmeraldInterestPolicy
+metadata:
+  name: lsg.emerald.emeraldinterestpolicy.subprime_us
+spec:
+  metadata:
+    id: emerald.emeraldinterestpolicy.subprime_us
+    name: Emerald Interest Policy - US Subprime
+    description: Interest Policy for Bank Xee US Subprime Credit Card
+    requester:
+      module: emerald-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  name: Emerald Interest Policy - US Subprime
+  code: EIPUS_SUBPRIME
+  description: Interest Policy for subprime US credit card segment
+  validFrom: '2026-04-01T00:00:00.000+05:30'  # Launch date can be updated
+  validTill: '2999-12-31T00:00:00.000+05:30'
+  creditEffectiveFrom: ValueDate
+  debitEffectiveFrom: ValueDate
+  interestAccrual:
+    accountLevelRate: true
+    dayCountMethods:
+      - lifeCycleEvent: firstInstallment
+        dayCountMethod: ACTUAL/360
+      - lifeCycleEvent: preClosure
+        dayCountMethod: ACTUAL/360
+      - lifeCycleEvent: reAmortization
+        dayCountMethod: 30/360G
+      - lifeCycleEvent: default
+        dayCountMethod: 30/360G
+    roundingRule: NEAR
+    dayCountMethod: null
+  interestLiquidation:
+    liquidationVoucherCode: LOAN_INTEREST_LIQUIDATION
+  interestRules:
+    - balanceType: DAILY_BALANCE
+      description: Normal Interest Base - Subprime
+      interestComponent: NORMAL_INTEREST_BASE
+      liquidation:
+        model: BillUnconditional
+        postingCategories:
+          accrualPostingCategory: ACCRUEDINTERESTNORMAL
+          billingPostingCategory: NORMALINTEREST
+          penaltyPostingCategory: PENALTYINTERESTBASE
+      postingCategory: NORMALINTERESTBASE
+  templateCode: us-credit.subprime
