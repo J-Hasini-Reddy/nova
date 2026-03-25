@@ -1,0 +1,42 @@
+kind: ClassificationUnit
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.aether.classification-unit.manual-bundle-status-credit-upgrade-mbcu1
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_aether/classification-units/classification-unit_manual-bundle-status-credit-upgrade-mbcu1.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: aether.classification-unit.manual-bundle-status-credit-upgrade-mbcu1
+
+    name: aether.classification-unit.manual-bundle-status-credit-upgrade-mbcu1
+
+    description: Manual Credit Upgrade Status for Bank Xee subprime customers.
+
+    tenantId: '600309'
+    tenantCode: lsg
+
+  # FROM: attributes: {}
+  # TO:   attributes: credit_upgraded: "true"
+  # WHY:  ADE reads this to apply 75% daily cap after graduation
+  attributes:
+    credit_upgraded: "true"
+
+  
+  classificationModelCode: manualBundleStatus
+
+  code: MBCU1
+
+  description: Manual Credit Upgrade Status - Level 1
+
+  icon: https://icon.yuko
+  infoUri: https://info.com
+  name: Manual Credit Upgrade Status - Level 1
+
+  # WHY:  Credit upgrade UNLOCKS actions — it does not restrict anything
+  #       Customer is graduating to prime — no blocks needed
+  restrictedActionCodes: []
+
+ 
+  tenantId: '600309'

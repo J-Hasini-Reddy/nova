@@ -1,0 +1,30 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.athena.authorization-gateway.secured
+spec:
+  metadata:
+    id: athena.authorization-gateway.secured
+    name: US Secured Authorization Gateway
+    description: Authorization Gateway for US Secured Credit Cards (limit = deposit)
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      code: AGWUSSECURE001
+      description: Authorization Gateway for US Secured Credit Cards
+      name: US Secured Authorization Gateway
+      status: ACTIVE
+      operations:
+        authorize:
+          baseUrl: https://us-secured-gateway.example.com/v1
+          connectTimeoutInMs: 1000
+          requestTimeoutInMs: 1000
+          status: ACTIVE
+          responseVerification:
+            signatoryJID: secured-us@issuer.com
+      # NOTE: For secured cards, authorization logic must check that available credit does not exceed the security deposit amount.

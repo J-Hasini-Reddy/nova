@@ -1,0 +1,35 @@
+kind: RubyCouponAccountingPolicy
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+ name: lsg.ruby.rubycouponaccountingpolicy.module.8001
+ labels:
+   rrsd.zetaapps.in/day: day-zero
+ annotations:
+   zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_ruby/coupon-accounting-policies/ruby-coupon-accounting-policy_8001.yaml","tenantCode":"lsg"}'
+ namespace: ruby
+spec:
+ metadata:
+   id: ruby.rubycouponaccountingpolicy.module.8001
+   name: ruby.rubycouponaccountingpolicy.module.8001
+   description: Subprime US Coupon Accounting Policy
+   tenantId: '600309'
+   tenantCode: lsg
+ validFrom: '2025-01-01T00:00:00.000-07:00'
+ validTill: '2099-01-01T00:00:00.000-07:00'
+ name: Subprime Coupon Accounting
+ description: Coupon accounting policy tailored for US subprime credit card segment
+ code: CAPUS008001
+ processAsynchronously: true
+ allowPartialRedemption: true
+ canBeOverriddenPerCard: false
+ denominations:
+   - 5
+   - 10
+   - 20
+ termProviders:
+   - interest
+ couponRedeemer: RubyCouponRedeemer
+ onExpiryCreditToAccount: REVERSE_TO_ISSUER
+ maxCouponsAllowedPerIssuance: 3
+ onPartiallyRedeemedToAccount: FORFEIT
+ templateCode: us-subprime-credit

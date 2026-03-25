@@ -10,7 +10,7 @@ spec:
   metadata:
     id: tdr.rubybureaureportingconfig.nova.us
     name: Nova US Bureau Reporting Configuration
-    description: Reporting configuration for Nova Genesis and Rise products in the US Market
+    description: Reporting configuration for secured and unsecured products in the US Market
     tenantId: '600309'
     tenantCode: lsg
   configs:

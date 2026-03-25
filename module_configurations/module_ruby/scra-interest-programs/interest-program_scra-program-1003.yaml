@@ -1,0 +1,82 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.ruby.configuration.module.subprime-us-card.scra-program
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_ruby/subprime-us-card/subprime-us-card-interest-program.yaml","tenantCode":"lsg"}'
+  namespace: ruby
+spec:
+  metadata:
+    id: ruby.configuration.module.subprime-us-card.scra-program
+    name: ruby.configuration.module.subprime-us-card.scra-program
+    description: Bank Xee Subprime US Credit Card Interest Program
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    schemaUrl: http://localhost
+    schemaInlineContent: |
+      {"properties":{"amountTiers":{"items":{"properties":{"fromAmount":{"type":"number"},"tenureTier":{"items":{"properties":{"fromTenure":{"properties":{"days":{"type":"number"},"months":{"type":"number"},"years":{"type":"number"}},"type":"object"},"interestRate":{"type":"number"},"toTenure":{"properties":{"days":{"type":"number"},"months":{"type":"number"},"years":{"type":"number"}},"type":"object"}},"type":"object"},"type":"array"},"toAmount":{"type":"number"}},"type":"object"},"type":"array"},"currency":{"type":"string"},"description":{"type":"string"},"name":{"type":"string"},"rateSpecificationCode":{"type":"string"},"status":{"type":"string"},"validFrom":{"type":"string"},"validTill":{"type":"string"}},"type":"object"}
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      name: Bank Xee Subprime US Credit Card Interest Program
+      code: SUBUS1001
+      description: Interest program for US subprime credit card
+      type: subprime
+      precedenceCode: '1000'
+      validFrom: '2026-03-24T00:00:00.000+07:00'
+      validUntil: '2999-01-01T23:09:01.795+07:00'
+      interestRules:
+        - applicableTo:
+            minValueThreshold: 1
+            maxValueThreshold: 1000
+            postingCategories:
+              - '*'
+            transactionSelectionCriterion: |
+              function evaluate(ruleContext) { return true; }
+          amountTiers:
+            - fromAmount: 1
+              toAmount: 1000
+              tenureTier:
+                - fromTenure: {years:0, months:0, days:0}
+                  toTenure: {years:1, months:0, days:0}
+                  interestRate: 35.0
+          precedenceCode: 100
+          ruleId: RULE_LOW
+        - applicableTo:
+            minValueThreshold: 1001
+            maxValueThreshold: 3000
+            postingCategories:
+              - '*'
+            transactionSelectionCriterion: |
+              function evaluate(ruleContext) { return true; }
+          amountTiers:
+            - fromAmount: 1001
+              toAmount: 3000
+              tenureTier:
+                - fromTenure: {years:0, months:0, days:0}
+                  toTenure: {years:1, months:0, days:0}
+                  interestRate: 29.0
+          precedenceCode: 101
+          ruleId: RULE_MEDIUM
+        - applicableTo:
+            minValueThreshold: 3001
+            maxValueThreshold: 5000
+            postingCategories:
+              - '*'
+            transactionSelectionCriterion: |
+              function evaluate(ruleContext) { return true; }
+          amountTiers:
+            - fromAmount: 3001
+              toAmount: 5000
+              tenureTier:
+                - fromTenure: {years:0, months:0, days:0}
+                  toTenure: {years:1, months:0, days:0}
+                  interestRate: 25.0
+          precedenceCode: 102
+          ruleId: RULE_HIGH
+      attributes: {}

@@ -1,0 +1,40 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.acropolis-pci.configuration.product.prdus003001.default.card-hub-product
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"/.defaults/product_configurations/provider_acropolis-pci/tree/root/t0/product_configurations/module_acropolis-pci/card-hub-product/card-hub-product-default.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: acropolis-pci.configuration.product.prdus003001.default.card-hub-product
+    name: default card-hub-product
+    description: Card Hub Product for PRDUS003001
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    schemaUrl: http://localhost
+    schemaInlineContent: |
+      {"properties":{"properties":{"bundleDefinitionId":{"type":"string"},"code":{"type":"string"},"description":{"type":"string"},"inviteConfig":{"properties":{"allowedCommunicationModes":{"items":{"type":"string"},"type":"array"},"allowedRelationshipTypes":{"items":{"type":"string"},"type":"array"},"inviteExpiryInHours":{"type":"number"},"maxInvites":{"type":"number"},"maxPendingInvites":{"type":"number"}},"type":"object"},"name":{"type":"string"}},"type":"object"},"type":"object"}
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      bundleDefinitionId: '1234'
+      code: CHBUS003001
+      description: This product contains the policies using which Visa TurboMax CardHub Product will be created.
+      inviteConfig:
+        allowedCommunicationModes:
+          - EMAIL
+        allowedRelationshipTypes:
+          - SPOUSE          # NEW — US household credit sharing
+          - PARENT_TO_CHILD # NEW — US family card use case
+        inviteExpiryInHours: 24
+        maxInvites: 1
+        maxPendingInvites: 1
+      name: VISA_TURBO
+  viewConfig:
+    angelosSchema:
+      view:
+        entityId: angelos.acropolis.card-hub-product
+    displayName: default card-hub-product

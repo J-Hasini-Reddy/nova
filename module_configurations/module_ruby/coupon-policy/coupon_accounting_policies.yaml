@@ -1,0 +1,37 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyCouponAccountingPolicy
+metadata:
+  name: lsg.ruby.rubycouponaccountingpolicy.subprime.6002
+  metadata:
+    id: ruby.rubycouponaccountingpolicy.subprime.6002
+    name: Subprime 6002 Ruby Coupon Accounting Policy
+    description: Coupon accounting policy tailored for US subprime credit card segment
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+spec:
+  validFrom: '2000-01-01T00:00:00.000-05:00'
+  validTill: '2999-01-01T00:00:00.000-05:00'
+  name: Coupon Accounting - Subprime
+  description: Controlled coupon accounting policy for high-risk subprime users in US market
+  code: CAPUS006002_SUBPRIME
+  processAsynchronously: true
+
+  allowPartialRedemption: true
+  canBeOverriddenPerCard: false
+
+  denominations: []
+
+  termProviders:
+    - interest
+
+  couponRedeemer: RubyCouponRedeemer
+
+  onExpiryCreditToAccount: ''
+  onPartiallyRedeemedToAccount: ''
+
+  maxCouponsAllowedPerIssuance: 3
+
+  templateCode: us-subprime-credit

@@ -1,0 +1,48 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: TransactionPolicy
+metadata:
+  name: lsg.aura.transaction-policy.block-international-fallback-401
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+spec:
+  accountsApplicableTo:
+    - account.provider: ruby
+  coaCode: COAUS005001
+  code: TPOUS00400401
+  customRules:
+    - action: META_DETAIL_CHANGE
+      errorCode: DISALLOWED_TRANSACTION_TYPE
+      evaluationFunction:
+        function: function apply(policyContext) { 
+            var attributes = policyContext.posting.attributes; 
+            var isDomestic = attributes['super-card.isDomestic'];
+
+            # ============================================
+            # ⬇️ ORIGINAL — only blocked international FALLBACK
+            # var contactType = attributes['super-card.txn-contact-type'];
+            # var domesticflag = (isDomestic === 'false');
+            # if (domesticflag) { 
+            #   if (contactType === 'FALLBACK') { return false; } 
+            # }
+            # return true;
+
+            # ⬇️ BANK XEE CHANGE — block ALL international transactions
+            # Subprime customers have no travel rewards on this card
+            # Any international transaction = high fraud risk for this segment
+            # Policy re-evaluated after Credit Upgrade (MBCU1)
+            if (isDomestic === 'false') {  # ⭐ NEW — block any non-domestic
+                return false;              # ⭐ NEW — regardless of contact type
+            }
+            return true;
+            # ============================================
+          }
+        type: JAVASCRIPT
+  description: Block ALL international transactions for Bank Xee subprime customers
+  effectiveFrom: '2018-04-01T00:00:00.000Z'
+  errorCodes:
+    - code: DECLINETRANSACTIONTYPE
+      description: Block ALL international transactions for Bank Xee subprime customers
+      errorCode: DISALLOWED_TRANSACTION_TYPE
+  expiresAt: '2999-12-31T00:00:00.000Z'
+  policyScope: EACH_ACCOUNT_OF_ACCOUNT_HOLDER
+  violationAction: DECLINE_AND_NOTIFY

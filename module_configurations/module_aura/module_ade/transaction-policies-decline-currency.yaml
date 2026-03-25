@@ -1,0 +1,48 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: TransactionPolicy
+metadata:
+  name: lsg.aura.transaction-policy.transaction-policies-decline-currency-codes-2007
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+spec:
+  accountsApplicableTo:
+    - account.provider: ruby
+  coaCode: COAUS003002
+  code: TPOUS00300207
+  customRules:
+    - action: META_DETAIL_CHANGE
+      errorCode: NON_USD_TRANSACTION_BLOCKED  # ⭐ NEW — renamed from DISALLOWED_TRANSACTION_CURRENCY
+      evaluationFunction:
+        function: function apply(policyContext) { 
+            var attributes = policyContext.posting.attributes; 
+            var transactioncurrency = attributes['authRequest.[type = "Transaction"].currency'];
+            
+            if (transactioncurrency == undefined || transactioncurrency == null) { 
+              return true; 
+            }
+            if (transactioncurrency.length == 0) { 
+              return true; 
+            }
+
+            # ⬇️ ORIGINAL — blacklist approach, blocking specific sanctioned currencies
+            # return ['IRR', 'CUP', 'KPW', 'VES', 'BYN', 'RUB'].indexOf(transactioncurrency) == -1;
+            
+            # ⬇️ BANK XEE CHANGE — whitelist approach, allow ONLY USD
+            # Original policy was redundant — international txns already blocked by Policy 2
+            # Repurposed to enforce USD-only transactions for US market
+            # Cleaner than maintaining a blacklist of sanctioned currencies
+            return transactioncurrency === 'USD';  # ⭐ NEW — only USD allowed
+            
+          }
+        type: JAVASCRIPT
+  description: Enforce USD-only transactions for Bank Xee US subprime market  # ⭐ CHANGED
+  effectiveFrom: '2022-03-24T11:54:14.000Z'
+  errorCodes:
+    - code: NONUSDTRANSACTIONBLOCKED
+      description: Only USD transactions are allowed for Bank Xee US subprime customers  # ⭐ CHANGED
+      errorCode: NON_USD_TRANSACTION_BLOCKED  # ⭐ CHANGED
+  expiresAt: '2999-12-31T00:00:00.000Z'
+  policyScope: EACH_ACCOUNT_OF_ACCOUNT_HOLDER
+  violationAction: DECLINE_AND_NOTIFY
+  viewConfig:
+    displayName: transaction-policies-usd-only-enforcement

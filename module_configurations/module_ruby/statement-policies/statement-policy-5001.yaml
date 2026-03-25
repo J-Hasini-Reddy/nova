@@ -1,17 +1,17 @@
 apiVersion: rrsd.zetaapps.in/v1alpha1
 kind: RubyStatementPolicy
 metadata:
-  name: lsg.ruby.rubystatementpolicy.nova.genesis
+  name: lsg.ruby.rubystatementpolicy.secured.5001
   labels:
     rrsd.zetaapps.in/day: day-zero
 spec:
   metadata:
-    id: ruby.rubystatementpolicy.nova.genesis
-    name: Nova Genesis Secured Statement Policy
+    id: ruby.rubystatementpolicy.secured.5001
+    name: Secured Statement Policy 5001
     tenantCode: lsg
   validFrom: '2026-01-01T00:00:00.000-05:00'
   validTill: '2099-01-01T00:00:00.000-05:00'
-  code: STMUS_NOVA_GEN
+  code: STMUS005001
   # US Regulation Z requires at least 21 days from statement to due date
   dueDays: 21 
   graceDays: 0

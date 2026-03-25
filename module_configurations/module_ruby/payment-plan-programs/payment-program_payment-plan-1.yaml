@@ -1,0 +1,37 @@
+kind: PaymentProgram
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.tdr.paymentprogram.module.payment-plan-1
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_ruby/payment-plan-programs/payment-program_payment-plan-1.yaml","tenantCode":"lsg"}'
+  namespace: ruby
+spec:
+  metadata:
+    id: tdr.paymentprogram.module.payment-plan-1
+    name: tdr.paymentprogram.module.payment-plan-1
+    description: tdr.paymentprogram.module.payment-plan-1
+    tenantId: '600309'
+    tenantCode: lsg
+    scope: Tenant
+  code: PPUS00300201
+  name: Payment Plan Program
+  description: Payment Program for US Subprime Credit Card Payment Plans
+  # Updated for US subprime: only subprime-appropriate fees and programs linked
+  precedenceCode: '100'
+  validFrom: 1214782800000
+  validUntil: 95586066000000
+  attributes: {}
+  linkedProgramCode:
+    madProgram:
+      - RUBYPYMTPLNMAD002  # Subprime MAD program
+    interestProgram:
+      - IPGUSPP003002      # Subprime interest program
+    feeProgram:
+      - PPF001002          # Subprime fee program
+  applicableFees:
+    - paymentPlanFee       # Subprime payment plan fee
+    - annualFee            # Subprime annual fee
+  tags:
+    - tag://paymentProgram/ACTIVE

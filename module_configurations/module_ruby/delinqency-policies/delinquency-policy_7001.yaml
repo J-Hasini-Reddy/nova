@@ -1,0 +1,69 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyDelinquencyPolicy
+metadata:
+  name: lsg.ruby.rubydelinquencypolicy.bankxee.subprime
+spec:
+  metadata:
+    id: ruby.rubydelinquencypolicy.bankxee.subprime
+    name: Bank Xee Subprime Delinquency Policy
+    description: Delinquency policy for subprime credit card customers in the US market
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  name: Bank Xee Subprime Policy
+  code: DLQUS_BANKXEE_SUB
+  description: Delinquency Policy for Subprime US Credit Card
+  delinquencyRules:
+    - level: 1
+      description: 1-30 DPD - Initial Missed Payment
+      fromDays: 1
+      toDays: 30
+    - level: 2
+      description: 31-60 DPD - 2 Payments Past Due
+      fromDays: 31
+      toDays: 60
+    - level: 3
+      description: 61-90 DPD - 3 Payments Past Due
+      fromDays: 61
+      toDays: 90
+    - level: 4
+      description: 91-120 DPD - 4 Payments Past Due
+      fromDays: 91
+      toDays: 120
+    - level: 5
+      description: 121-150 DPD - 5 Payments Past Due
+      fromDays: 121
+      toDays: 150
+    - level: 6
+      description: 151-180 DPD - Charge-off Risk
+      fromDays: 151
+      toDays: 180
+    - level: 7
+      description: 181+ DPD - Charged Off / High Risk
+      fromDays: 181
+      toDays: 1000
+  paymentVariance:
+    amount: 100
+    currency: USD
+    varianceType: VARIABLE
+    percentageValue: 5.5
+    paymentVarianceLimit:
+      maxValue: 5000
+      minValue: 0
+  paymentVarianceForLateFee:
+    amount: 100
+    currency: USD
+    varianceType: VARIABLE
+    percentageValue: 3.5
+    paymentVarianceLimit:
+      maxValue: 5000
+      minValue: 0
+  delinquencyAgeingBasis: dueDate
+  updateFreezeValueOnReAgeing: true
+  balanceLevelForDueReview: CURRENTBALANCE
+  dpdAgeingBasis: dueDate
+  validFrom: '2000-01-01T00:00:00.000-05:00'
+  validTill: '2999-01-01T00:00:00.000-05:00'
+  templateCode: us-credit

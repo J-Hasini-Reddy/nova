@@ -1,0 +1,50 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: CreditAllocationSpec
+metadata:
+  name: lsg.auraapps.module.creditallocationspec.5001.secured
+  annotations: null
+  labels:
+    module: auraapps
+    rrsd.zetaapps.in/space: aws-default-pp-mumbai
+  namespace: auraapps
+spec:
+  metadata:
+    id: auraapps.module.creditallocationspec.5001.secured
+    name: Secured unified allocation spec 5001
+    description: Unified US-credit allocation spec for secured product
+    tenantId: '600309'
+    tenantCode: lsg
+  code: CRSUS009901
+  flags:
+    allocateToCategoryType: true
+    shouldMADBeKnockedOff: true
+    applyCardActExcessAllocation: true
+    allocateExcessAboveMADByHighestAPR: true
+    ignoreCardOriginForExcessAllocation: true
+  allocationSequence:
+  - LateFeeBilled
+  - InsufficientFundFeeBilled
+  - OverlimitFeeBilled
+  - CollectionFeeBilled
+  - CashAdvanceFeeBilled
+  - RetailMiscFeeBilled
+  - RetailServiceFeeBilled
+  - AnnualFeeBilled
+  - CashInterestBilled
+  - EMIInterestBilled
+  - RetailInterestBilled
+  - CashPrincipalBilled
+  - EMIPrincipalBilled
+  - RetailPrincipalBilled
+  - LateFeeUnbilled
+  - InsufficientFundFeeUnbilled
+  - OverlimitFeeUnbilled
+  - CollectionFeeUnbilled
+  - CashAdvanceFeeUnbilled
+  - RetailMiscFeeUnbilled
+  - RetailServiceFeeUnbilled
+  - AnnualFeeUnbilled
+  tieBreaker: HIGHEST_APR_FIRST
+  aprTieBreaker: OLDEST_BILLED_TRANSACTION_FIRST
+  equalAprTieBreaker: OLDEST_BILLED_TRANSACTION_FIRST
+  targetCategoryForExcessCredit: ExcessPayment

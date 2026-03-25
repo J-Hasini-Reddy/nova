@@ -1,0 +1,35 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyAccountClosurePolicy
+metadata:
+  name: lsg.ruby.rubyaccountclosurepolicy.1011
+spec:
+  metadata:
+    id: ruby.rubyaccountclosurepolicy.1011
+    name: 1011 Account Closure Policy
+    description: 1011 Account Closure Policy
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  name: Account Closure Policy
+  code: ACPIN001011
+  description: Account Closure Policy for US Subprime Credit Cards
+  # Updated for US subprime: higher risk tolerance, more lenient write-off for Delinquency, stricter for Dormancy/NonActivation
+  reason:
+    - reasonCode: Delinquency
+      maxDebitBalForWriteOff: 1000  # Increased for subprime risk
+    - reasonCode: Dormancy
+      maxDebitBalForWriteOff: 0
+    - reasonCode: NonActivation
+      maxDebitBalForWriteOff: 0
+    - reasonCode: CustomerRequest
+      maxDebitBalForWriteOff: 25   # Slightly higher for subprime
+    - reasonCode: BankInitiated
+      maxDebitBalForWriteOff: 0
+  validFrom: '2018-01-01T21:39:01.795+05:30'
+  validTill: '9999-01-01T21:39:01.795+05:30'
+  templateCode: us-credit
+  systemInitiatedClosureCriteria: [
+    
+    ]

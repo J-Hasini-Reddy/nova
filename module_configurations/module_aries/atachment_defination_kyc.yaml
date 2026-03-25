@@ -1,0 +1,37 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: AttachmentDefinition
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.aries.attachment-definition.kyc
+spec:
+  attachmentType: KYC
+  schaasSchema: |-
+    {
+      "type": "object",
+      "properties": {
+        "attachmentType": { "const": "KYC" },
+        "attachmentData": {
+          "type": "object",
+          "required": [
+            "kyc_doc_type",
+            "kyc_doc_url",
+            "isVerified",
+            "kyc_doc_validation_date",
+            "device_id",         <-- NEW: Essential for fraud prevention
+            "fraud_score1"      <- NEW: Essential for identity trust
+          ],
+          "properties": {
+            "kyc_doc_type": { "type": "string", "enum": ["PASSPORT", "DRIVERS_LICENSE"] },
+            "isVerified": { "type": "boolean" },
+            "**device_id**": { 
+              "type": "string", 
+              "description": "Unique ID of the applicant's mobile device" 
+            },
+            "**fraud_score1**": { 
+              "type": "string", 
+              "description": "External fraud score for identity validation" 
+            }
+          }
+        }
+      }
+    }

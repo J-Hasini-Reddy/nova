@@ -1,0 +1,61 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.aries.configuration.module.default.ah-schema
+spec:
+  metadata:
+    id: aries.configuration.module.default.ah-schema
+    name: Bank Xee Account Holder Schema
+    tenantCode: lsg
+  config:
+    value:
+      description: "US-Specific Schema for Subprime Onboarding"
+      properties:
+        # --- CORE IDENTITY FIELDS (Existing) ---
+        firstName: { type: string, maxLength: 20 }
+        lastName: { type: string, maxLength: 25 }
+        dob: { type: string, format: date }
+        
+        # --- IDENTITY VECTORS (Existing) ---
+        vectors:
+          items:
+            properties:
+              type: { enum: ["SSN"] }
+              value: { type: string, pattern: "^\\d{9}$" } # Matches 9-digit SSN
+        
+        # --- THE CUSTOM ATTRIBUTES (Where the Bank Xee magic happens) ---
+        attributes:
+          type: object
+          properties:
+            # 1. Existing Standard Field
+            riskScore: { type: ["integer", "null"] } 
+            
+            # 2. NEW: Real-time Behavioral Risk (Bank Xee Update)
+            risk_pulse_score: { 
+              type: integer, 
+              description: "Dynamic risk score derived from Open Banking bill payment data (rent, utilities, telecom)"
+            }
+            
+            # 3. NEW: Literacy Check (Bank Xee Update)
+            credit_education_status: { 
+              type: boolean, 
+              default: false,
+              description: "True if user completes the 30-second credit quiz"
+            }
+            
+            # 4. Existing Legal Field
+            postScreenFICOScore: { type: string }
+
+        # --- LOCATION DATA (Existing) ---
+        pointsOfPresence:
+          items:
+            properties:
+              label: { enum: ["Home", "Billing", "Work"] }
+              addresses:
+                items:
+                  properties:
+                    state: { pattern: "^(AL|AK|AZ|AR|CA|CO|CT...)$" } # US States only
+                    country: { const: "US" }
+      
+      # Mandatory fields for a successful API call
+      required: ["firstName", "lastName", "vectors", "pointsOfPresence", "attributes"]

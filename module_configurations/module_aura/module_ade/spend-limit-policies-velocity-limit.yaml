@@ -1,0 +1,56 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: TransactionPolicy
+metadata:
+  name: lsg.aura.configuration.transaction-policy-velocity-limit-policy
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+spec:
+  metadata:
+    id: aura.transaction-policy.velocity-limit-policy
+    name: TransactionPolicy
+    description: Velocity limit policy for Bank Xee subprime customers
+    requester:
+      module: aura-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  code: TPOUS00300108
+  coaCode: COAUS003001
+  description: Tightened velocity limits for Bank Xee subprime fraud control  # ⭐ CHANGED
+  policyScope: EACH_ACCOUNT_OF_ACCOUNT_HOLDER
+  effectiveFrom: '2006-03-24T11:54:14.000Z'
+  expiresAt: '2999-12-31T00:00:00.000Z'
+  violationAction: DECLINE_AND_NOTIFY
+  accountsApplicableTo:
+    - account.provider: ruby
+  aggregateRules:
+
+    - action: DEBIT
+      transactionCategoryCode: RETAIL_CASH_TRANSACTIONS
+      aggExpressionCode: '6'
+      errorCode: RETAIL_CASH_TXN_DAILY_COUNT_EXCEEDED
+      type: VELOCITY
+      cycleURI: cycleCode://CLKUS003001_CBU
+      maxLimit: 5          # ⭐ CHANGED from 50 → 5
+                           # Subprime customers need very few cash transactions
+                           # More than 5 cash txns/day = strong fraud signal
+
+    - action: DEBIT
+      transactionCategoryCode: RETAIL_PURCHASE_TRANSACTIONS
+      aggExpressionCode: '6'
+      errorCode: WEEKLY_VELOCITY_LIMIT_EXCEEDED
+      type: VELOCITY
+      cycleURI: cycleCode://CALENDAR_YEAR_WEEKLY_6190154301701030316
+      maxLimit: 50         # ⭐ CHANGED from 350 → 50
+                           # 10 txns/day × 5 days = 50/week is realistic
+                           # 350/week is absurd for a subprime customer
+
+    - action: DEBIT
+      transactionCategoryCode: RETAIL_PURCHASE_TRANSACTIONS
+      aggExpressionCode: '6'
+      errorCode: DAILY_VELOCITY_LIMIT_EXCEEDED
+      type: VELOCITY
+      cycleURI: cycleCode://CALENDAR_YEAR_DAILY_6190154301701030316
+      maxLimit: 10         # ⭐ CHANGED from 50 → 10
+                           # Average subprime customer makes 6-8 txns/day
+                           # 10 gives safe buffer while catching fraud patterns

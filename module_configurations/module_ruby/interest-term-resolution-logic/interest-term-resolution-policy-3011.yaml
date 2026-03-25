@@ -1,0 +1,87 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyInterestTermResolutionPolicy
+metadata:
+  name: xee.subprime.full.stack.resolution.3011
+spec:
+  code: XEE_SUBPRIME_OMNI_001
+  description: Omni-resolution policy for all subprime account states
+  metadata:
+    description: 3011 policy managing SCRA, Hardship, Delinquency, and Promos
+    id: xee.interesttermresolutionpolicy.3011
+    name: Bank Xee Omni-Policy
+    requester:
+      module: xee-credit-core
+      moduleVersion: 2.0.0
+    tenantCode: xee_us
+    tenantId: '744210'
+  configs:
+    # THE "PROTECTION" RULE: If a user gets SCRA or HARDSHIP status
+    - selectionCriteria:
+        accountStatus:
+          - tag://SCRAStatus/LEVEL_1?name=SCRA&tagTypeCode=classification
+          - tag://FinancialStatus/HARDSHIP?name=Hardship&tagTypeCode=classification
+      couponRepricingConfig:
+        - programType: GENERAL
+          repricingAction: REPRICE
+          repricingStrategy:
+            preferenceWithinProgramType: LOWESTAPR
+            eligibleProgramTypes:
+              - SCRA              # Rule: Military 6% cap always wins
+              - HARDSHIP          # Rule: Temporary relief (e.g., 9.99%)
+              - PROMOTION         # Rule: Could be 0% for a period
+              - BALANCE_TRANSFER  # Rule: Specific low rate for moved debt
+            flags:
+              shouldResolveCurrentTerm: true
+              shouldRecursivelyResolvePreviousAppliedTerms: false
+        
+        # If they were already in a PENALTY state, force them down to a relief rate
+        - programType: DELINQUENCY
+          repricingAction: REPRICE
+          repricingStrategy:
+            preferenceWithinProgramType: LOWESTAPR
+            eligibleProgramTypes:
+              - SCRA
+              - HARDSHIP
+            flags:
+              shouldResolveCurrentTerm: true
+              shouldRecursivelyResolvePreviousAppliedTerms: false
+
+    # THE "PENALTY" RULE: If a user falls 30+ days late
+    - selectionCriteria:
+        accountStatus:
+          - tag://DelinquencyStatus/LEVEL_1?name=LATE_30_DAYS&tagTypeCode=classification
+      couponRepricingConfig:
+        - programType: GENERAL
+          repricingAction: REPRICE
+          repricingStrategy:
+            preferenceWithinProgramType: PRECEDENCE 
+            eligibleProgramTypes:
+              - DELINQUENCY # Move them from 29% to maybe 34% penalty APR
+            flags:
+              shouldResolveCurrentTerm: true
+              shouldRecursivelyResolvePreviousAppliedTerms: false
+
+    # THE "EXPIRY" RULE: When a special rate (like a Promo or SCRA) ends
+    - selectionCriteria:
+        accountStatus:
+          - '*'
+        postingFilters:
+          purposeCodes:
+            - PROMO_EXPIRY
+            - SCRA_EXPIRY
+            - HARDSHIP_EXPIRY
+      couponRepricingConfig:
+        - programType: PROMOTION
+          repricingAction: REPRICE
+          repricingStrategy:
+            preferenceWithinProgramType: PRECEDENCE
+            eligibleProgramTypes:
+              - GENERAL          # Back to standard subprime rate
+              - BALANCE_TRANSFER # Or move to a specific transfer bucket
+            flags:
+              shouldResolveCurrentTerm: false
+              shouldRecursivelyResolvePreviousAppliedTerms: true
+
+  templateCode: xee-subprime-us-credit
+  validFrom: '2026-01-01T00:00:00.000Z'
+  validTill: '2999-12-31T23:59:59.999Z'

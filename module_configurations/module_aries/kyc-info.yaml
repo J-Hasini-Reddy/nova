@@ -1,0 +1,48 @@
+kind: Classification
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.aries.classification.kyc-info
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"/.defaults/module_configurations/module_aries/tree/root/t0/module_configurations/module_aries/classifications/classification_kyc-info.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: aries.classification.kyc-info
+    name: kyc-info
+    description: KYC Classification for Bank Xee US Subprime Credit Card Onboarding
+    requester:
+      module: aries
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  classificationModel:
+    code: KYC-INFO
+    name: Effective KYC Info
+    modelType: Collection
+    associationCardinality: Multiple
+    objectType: in.zeta.mars.AccountHolder
+    isRuleBased: false
+    
+    classificationUnits:
+    - attributes:
+        subMethods: SOCURE, JUMIO
+        KYC Artifacts: SSN, Drivers License, Passport
+      code: Full KYC-Digital
+      
+      description: Full Digital KYC for US subprime customers
+      name: Full KYC-Digital
+
+    # - attributes:
+    #     subMethods: SOCURE
+    #     KYC Artifacts: SSN Last 4, Date of Birth
+    #   code: Min KYC-SSN
+    #   description: Minimum KYC using SSN for thin file applicants
+    #   name: Min KYC-SSN
+
+    - attributes:
+        subMethods: NA
+        KYC Artifacts: NA
+      code: No KYC
+      description: No KYC
+      name: No KYC

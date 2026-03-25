@@ -1,0 +1,159 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyInterestTermResolutionPolicy
+metadata:
+  # Customized name for Bank Xee's Subprime Program
+  name: xee.subprime.omni.resolution.policy.8001
+spec:
+  code: XEE_TRP_SUBPRIME_001
+  description: Omni-interest resolution policy for Bank Xee Subprime Segment
+  metadata:
+    description: Resolution policy managing SCRA, Hardship, Delinquency, and Promos for high-risk users
+    id: xee.interesttermresolutionpolicy.8001
+    name: Bank Xee Omni Resolution Policy
+    requester:
+      module: xee-ruby-core
+      moduleVersion: 1.0.0
+    tenantCode: xee_us
+    tenantId: '744210'
+  configs:
+    # --- CONFIG 1: THE RELIEF TRIGGER ---
+    # Triggered when a subprime user qualifies for SCRA (Military) or HARDSHIP (Financial Crisis)
+    - selectionCriteria:
+        accountStatus:
+          - tag://SCRAStatus/LEVEL_1?name=SCRA&tagTypeCode=classification
+          - tag://FinancialStatus/HARDSHIP?name=Hardship&tagTypeCode=classification
+        postingFilters:
+          purposeCodes: []
+      couponRepricingConfig:
+        # If user is in any of these states, immediately move them to the Relief rate (SCRA/Hardship)
+        - programType: GENERAL
+          repricingAction: REPRICE
+          repricingStrategy: &relief_strategy
+            preferenceWithinProgramType: LOWESTAPR
+            eligibleProgramTypes:
+              - SCRA
+              - HARDSHIP
+            flags:
+              shouldResolveCurrentTerm: true
+              shouldRecursivelyResolvePreviousAppliedTerms: false
+        - programType: PROMOTION
+          repricingAction: REPRICE
+          repricingStrategy: *relief_strategy
+        - programType: BALANCE_TRANSFER
+          repricingAction: REPRICE
+          repricingStrategy: *relief_strategy
+        - programType: DELINQUENCY
+          repricingAction: REPRICE
+          repricingStrategy: *relief_strategy
+        - programType: HARDSHIP
+          repricingAction: REPRICE
+          repricingStrategy: *relief_strategy
+        - programType: SCRA
+          repricingAction: DONT_REPRICE # Stay on the lowest military rate
+      
+      couponExpiryConfig:
+        # When a term ends, always try to keep them on the lowest possible rate to prevent default
+        - programType: GENERAL
+          repricingAction: REPRICE
+          repricingStrategy: &expiry_relief
+            preferenceWithinProgramType: LOWESTAPR
+            eligibleProgramTypes:
+              - SCRA
+              - HARDSHIP
+              - DELINQUENCY
+              - GENERAL
+              - BALANCE_TRANSFER
+              - PROMOTION
+        # (Repeat strategy for other types to ensure consistent safety)
+        - programType: PROMOTION
+          repricingAction: REPRICE
+          repricingStrategy: *expiry_relief
+        - programType: BALANCE_TRANSFER
+          repricingAction: REPRICE
+          repricingStrategy: *expiry_relief
+        - programType: DELINQUENCY
+          repricingAction: REPRICE
+          repricingStrategy: *expiry_relief
+        - programType: HARDSHIP
+          repricingAction: REPRICE
+          repricingStrategy: *expiry_relief
+        - programType: SCRA
+          repricingAction: REPRICE
+          repricingStrategy: *expiry_relief
+      
+      couponNewIssuanceConfig:
+        - preferenceWithinProgramType: LOWESTAPR
+          eligibleProgramTypes:
+            - SCRA
+            - HARDSHIP
+            - DELINQUENCY
+            - PROMOTION
+            - GENERAL
+            - BALANCE_TRANSFER
+
+    # --- CONFIG 2: THE EXPIRY & RECOVERY TRIGGER ---
+    # Triggered specifically when an SCRA or HARDSHIP period ends
+    - selectionCriteria:
+        accountStatus:
+          - '*'
+        postingFilters:
+          purposeCodes:
+            - SCRA_EXPIRY
+            - HARDSHIP_EXPIRY
+      couponRepricingConfig:
+        # Don't touch other programs, only reprice the expiring relief program
+        - programType: GENERAL
+          repricingAction: DONT_REPRICE
+        - programType: PROMOTION
+          repricingAction: DONT_REPRICE
+        - programType: BALANCE_TRANSFER
+          repricingAction: DONT_REPRICE
+        - programType: DELINQUENCY
+          repricingAction: DONT_REPRICE
+        - programType: HARDSHIP
+          repricingAction: DONT_REPRICE
+        - programType: SCRA
+          repricingAction: REPRICE
+          repricingStrategy:
+            # Use PRECEDENCE so Bank Xee can control the exact order of recovery
+            preferenceWithinProgramType: PRECEDENCE
+            eligibleProgramTypes:
+              - SCRA
+              - HARDSHIP
+              - PROMOTION
+              - GENERAL
+              - BALANCE_TRANSFER
+              - DELINQUENCY
+            flags:
+              shouldResolveCurrentTerm: false
+              shouldRecursivelyResolvePreviousAppliedTerms: true # Clean up history upon return
+      
+      couponExpiryConfig:
+        - programType: SCRA
+          repricingAction: REPRICE
+          repricingStrategy:
+            preferenceWithinProgramType: PRECEDENCE
+            eligibleProgramTypes:
+              - SCRA
+              - HARDSHIP
+              - PROMOTION
+              - GENERAL
+              - BALANCE_TRANSFER
+              - DELINQUENCY
+            flags:
+              shouldResolveCurrentTerm: false
+              shouldRecursivelyResolvePreviousAppliedTerms: true
+      
+      couponNewIssuanceConfig:
+        - preferenceWithinProgramType: PRECEDENCE
+          eligibleProgramTypes:
+            - SCRA
+            - HARDSHIP
+            - PROMOTION
+            - GENERAL
+            - BALANCE_TRANSFER
+            - DELINQUENCY
+
+  templateCode: xee-subprime-us-credit
+  validFrom: '2026-01-01T00:00:00.000Z'
+  validTill: '2099-12-31T23:59:59.000Z'

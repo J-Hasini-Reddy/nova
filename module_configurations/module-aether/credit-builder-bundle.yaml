@@ -1,0 +1,80 @@
+kind: ProductBundle
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  # FROM: name: lsg.aether.productbundle.6858
+  # TO:   name: lsg.aether.productbundle.bankxee-credit-builder
+  # WHY:  Unique bundle for Bank Xee Tier 1 subprime customers
+  name: lsg.aether.productbundle.bankxee-credit-builder
+  labels:
+    rrsd.zetaapps.in/day: day-one
+  namespace: aether
+
+spec:
+  metadata:
+    id: aether.productbundle.bankxee-credit-builder
+
+    name: Bank Xee Credit Builder Bundle
+
+    description: Credit Builder for FICO 580-660 or low risk_pulse_score customers
+
+    requester:
+      module: aether
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+
+  code: PBXEE-CREDIT-BUILDER-001
+  blueprintCode: PBBXEECB0001
+  blueprintName: Bank Xee US Credit Builder Blueprint
+
+  bannerImageUrl: https://hercules-assets.mum1-pp.zetaapps.in/common-assets/3.0.316/business-components/blueprints-list/images/banners/consumer_durable_credit.png
+  bundleProviderCode: BPRINZZ0001
+
+  name: Bank Xee Credit Builder
+
+  description: Tier 1 Subprime - FICO 580-669 or low risk_pulse_score
+
+  
+  picture: https://hercules-assets.mum1-pp.zetaapps.in/common-assets/3.0.328/business-components/blueprints-list/images/cards/us-credit.jpg
+
+  productBundlePolicies:
+
+
+
+    receiverPolicy:
+      onboardReceiver: false
+
+    identityPolicy:
+      # WHY:  Phone mandatory for US OTP verification
+      isPhoneMandatory: True
+
+      # WHY:  Email mandatory for credit card statements
+      isEmailMandatory: true
+      defaultEmailLabel: 'primary'
+      defaultPhoneLabel: 'primary'
+
+    activationPolicy:
+      # WHY:  Auto activate once all artefacts issued successfully
+      activateAccount: true
+
+  componentProducts:
+    - alias: PORUS-RESOURCE
+      product:
+        externalProductCode: RPXEE00CB001
+      dependentCompositeTypes:
+        - PAYMENT_PRODUCT
+    - alias: PRIMARY_CARD_VIRTUAL
+      product:
+        externalProductCode: FFXEE00CB001
+      dependentCompositeTypes:
+        - PAYMENT_PRODUCT
+    - alias: RUBY_PAP-PAYMENT_ACCOUNT
+      product:
+        externalProductCode: PAPZZXEE00CB001
+      dependentCompositeTypes:
+        - PAYMENT_PRODUCT
+    - alias: RUBY-TXN_ACCOUNT
+      product:
+        externalProductCode: RAPXEE00CB001
+      dependentCompositeTypes:
+        - TRANSACTION_ACCOUNT_PRODUCT

@@ -1,0 +1,27 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: ClassificationModel
+metadata:
+  labels:
+    rrsd.zetaapps.in/day: day-minus-one
+  name: lsg.aether.classification-model.manual-bundle-status
+spec:
+  associationAttributes: {}
+  associationCardinality: Single
+  attributes:
+    type: manual
+  code: manualBundleStatus
+  icon: https://icon.yuko
+  infoUri: https://info.com
+  isRuleBased: false
+  metadata:
+    description: Bundle Status Manual Classification Model.
+    id: aether.classification-model.manual-bundle-status
+    name: manual-bundle-status
+    requester:
+      moduleVersion: 0.0.1
+    tenantCode: lsg
+    tenantId: '600309'
+  modelType: Collection
+  name: Bundle Status Manual Classification Model
+  objectType: in.zeta.aether.bundle
+  tenantId: '600309'

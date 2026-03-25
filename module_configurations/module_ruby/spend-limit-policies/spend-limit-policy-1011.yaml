@@ -1,0 +1,41 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubySpendLimitPolicy
+metadata:
+  name: lsg.ruby.rubyspendlimitpolicy.1011
+spec:
+  metadata:
+    id: ruby.rubyspendlimitpolicy.1011
+    name: 1011 Ruby Spend Limit Policies
+    description: 1011 Ruby Spend Limit Policies
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  validFrom: '2015-07-25T23:09:01.000Z'
+  validTill: '2099-07-25T23:09:01.000Z'
+  name: Spend Limit Policy 1011
+  description: Spend Limit Policy 1011 (US Subprime, International Blocked)
+  code: SPLUS001011
+  coaCode: COAUS001011
+  # Block all international spend categories for subprime US cards
+  disabledForNewCards:
+    - INTERNATIONAL_POS
+    - INTERNATIONAL_ECOM
+    - INTERNATIONAL_ATM
+    - INTERNATIONAL_CONTACTLESS
+  defaultLimitsForNewCards:
+    - category: DOMESTIC_ECOM
+      limitType: PERTRANSACTION
+      limitValue: '500'
+    - category: DOMESTIC_POS
+      limitType: PERTRANSACTION
+      limitValue: '700'
+    - category: DOMESTIC_ATM
+      limitType: PERTRANSACTION
+      limitValue: '300'
+    - category: DOMESTIC_CONTACTLESS
+      limitType: PERTRANSACTION
+      limitValue: '200'
+    # International categories are blocked for subprime US cards, so no limits are set for them
+  templateCode: us-credit

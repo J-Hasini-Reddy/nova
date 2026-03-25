@@ -1,0 +1,23 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyConfig
+metadata:
+  name: lsg.ruby.rubyconfig.unsecured-subprime-us
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"/.defaults/module_configurations/module_ruby/ruby-config-unsecured-subprime-us.yaml","tenantCode":"lsg"}'
+  namespace: ruby
+spec:
+  metadata:
+    id: ruby.rubyconfig.unsecured-subprime-us
+    name: Unsecured Subprime US Credit Card Config
+    description: Ruby module configuration for unsecured subprime US credit card (risk-based pricing)
+    requester:
+      module: ruby
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+
+  templateCode: us-credit
+
+  overrideTemplates: []

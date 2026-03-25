@@ -1,0 +1,47 @@
+kind: ClassificationUnit
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.aether.classification-unit.auto-bundle-status-abgp1
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_aether/classification-units/classification-unit_auto-bundle-status-abgp1.yaml","tenantCode":"lsg"}'
+  namespace: aether
+spec:
+  # FROM: attributes: {}
+  # TO:   attributes: grace_period_active: "true"
+  # WHY:  ADE reads this to apply 25% daily cap during grace period
+  attributes:
+    grace_period_active: "true"
+
+  classificationModelCode: autoBundleStatus
+
+  code: ABGP1
+
+  description: Auto Grace Period Status - Level 1
+
+  icon: https://icon.yuko
+  infoUri: https://info.com
+
+  metadata:
+    description: Auto Grace Period Status - Level 1.
+
+    id: aether.classification-unit.auto-bundle-status-abgp1
+
+    name: abgp1
+
+    requester:
+      module: aether
+      moduleVersion: 0.0.1
+    tenantCode: lsg
+    tenantId: '600309'
+
+  name: Auto Grace Period Status - Level 1
+
+  # WHY:  Only block card reissuance — transactions still allowed during grace period
+  restrictedActionCodes:
+    - REISSUE_CARD
+    - REISSUE_CARD_HARMONIX
+
+ 
+  tenantId: '600309'

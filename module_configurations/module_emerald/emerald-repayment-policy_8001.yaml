@@ -1,0 +1,53 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: EmeraldRepaymentPolicy
+metadata:
+  name: xee.subprime.repaymentpolicy.9001
+
+spec:
+  metadata:
+    id: xee.subprime.repaymentpolicy.9001
+    name: Xee Subprime Repayment Policy
+    description: Repayment policy for Bank Xee US subprime credit card segment
+    requester:
+      module: xee-credit-module
+      moduleVersion: 1.0.0
+    tenantId: '900001'
+    tenantCode: xee
+
+  validFrom: '2024-01-01T00:00:00.000-05:00'
+  validTill: '2999-12-31T00:00:00.000-05:00'
+
+  name: Xee Subprime Repayment Policy
+  description: Handles repayments, partial payoffs, and delinquency behavior for subprime customers
+  code: XEEUSSP9001
+
+  # Tracks the oldest overdue amount first to control risk in subprime portfolios
+  longestOverDue: true
+
+  # Minimum amount required for partial payoff (5000 = $50 if system uses cents)
+  minAmountForPartialPayOff: 5000
+
+  # Minimum number of installments before allowing partial payoff
+  minInstallmentsForPartialPayOff: 1
+
+  # Number of retry attempts for failed auto-debit transactions
+  numberOfRetriesForAutoRepayment: 5
+
+  # Excess payment is adjusted against future dues
+  excessPaymentCategory: ADJUST_FUTURE_DUES
+
+  # Allows customers to make partial payments instead of full settlement
+  partialPayOffAllowed: true
+
+  # Auto-debit mode for repayment
+  repaymentMode: AUTO
+
+  # Defines repayment priority order
+  repaymentSequence:
+    - settlementPriority:
+        - LATE_FEES
+        - INTEREST
+        - PRINCIPAL
+
+  # Template aligned with US subprime credit card products
+  templateCode: us-subprime-credit

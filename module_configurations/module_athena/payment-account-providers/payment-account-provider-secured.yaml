@@ -1,0 +1,24 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.athena.configuration.module.default.payment-account-provider
+spec:
+  metadata:
+    id: athena.configuration.module.default.payment-account-provider
+    name: Payment Account Provider for US Secured
+    description: Credit Card Payment Account Provider for US Secured (limit = deposit)
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      code: PAPUSSECURE001
+      name: Payment Account Provider for US Secured
+      description: Credit Card Payment Account Provider for US Secured (limit = deposit)
+      status: ACTIVE
+      providedAccountSchemaURI: schema://subjects/id-data-schema/versions/1
+      authorizationGatewayCodes:
+        - AGWUSSECURE001

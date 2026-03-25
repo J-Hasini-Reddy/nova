@@ -1,0 +1,256 @@
+kind: Channelcode
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.athena.channelcode.mc-dms-us-offus-channel-1101
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"/.defaults/module_configurations/module_athena/tree/root/t0/module_configurations/module_athena/channel-codes/channelcode-mc-dms-us-offus-channel-1101.yaml","tenantCode":"lsg"}'
+  namespace: athena
+spec:
+  metadata:
+    id: athena.channelcode.mc-dms-us-offus-channel-1101
+    name: mc-dms-us-offus-channel-1101
+    description: Sample Channelcode
+    requester:
+      module: athena
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  channelCodeId: CHNUSZZ1101
+  code: CHNUSZZ1101
+  name: US Mastercard Off-Us Channel
+  description: US Mastercard Off-Us Channel (International transactions blocked for US cards)
+  status: ACTIVE
+  channelType: MC DMS US Offus Channel
+  tags: [US_CARDS, BLOCK_INTERNATIONAL]
+  paymentCodes:
+    # Only domestic payment codes for US cards are allowed. International codes are blocked.
+    - PMCUSZZ110121103
+    - PMCUSZZ110120103
+    - PMCUSZZ110100503
+    - PMCUSZZ110101034
+    - PMCUSZZ110100034
+    - PMCUSZZ110111034
+    - PMCUSZZ110110034
+    - PMCUSZZ110110035
+    - PMCUSZZ110111035
+    - PMCUSZZ110101004
+    - PMCUSZZ110100004
+    - PMCUSZZ110101005
+    - PMCUSZZ110101058
+    # International payment codes removed
+    - PMCUSZZ110131101
+    - PMCUSZZ110150040
+    - PMCUSZZ110151040
+    - PMCUSZZ110111009
+    - PMCUSZZ110110009
+    - PMCUSZZ110111098
+    - PMCUSZZ110110098
+    - PMCUSZZ110101020
+    - PMCUSZZ110101021
+    - PMCUSZZ110111023
+    - PMCUSZZ110111022
+    - PMCUSZZ110100020
+    - PMCUSZZ110100021
+    - PMCUSZZ110110023
+    - PMCUSZZ110110022
+    - PMCUSZZ110100005
+    - PMCUSZZ110121106
+    - PMCUSZZ110121300
+    - PMCUSZZ110121302
+    - PMCUSZZ110120106
+    - PMCUSZZ110100505
+    - PMCUSZZ110120300
+    - PMCUSZZ110120302
+    - PMCUSZZ110100201
+    - PMCUSZZ110100203
+    - PMCUSZZ110101201
+    - PMCUSZZ110101203
+    - PMCUSZZ110110215
+    - PMCUSZZ110110217
+    - PMCUSZZ110111215
+    - PMCUSZZ110111217
+    - PMCUSZZ110150201
+    - PMCUSZZ110151201
+    - PMCUSZZ110100261
+    - PMCUSZZ110110261
+    - PMCUSZZ110111261
+    - PMCUSZZ110100263
+    - PMCUSZZ110101263
+    - PMCUSZZ110110260
+    - PMCUSZZ110111260
+    - PMCUSZZ110191034
+    - PMCUSZZ110192034
+    - PMCUSZZ110191005
+    - PMCUSZZ110192005
+    - PMCUSZZ110191103
+    - PMCUSZZ110192103
+    - PMCUSZZ110110029
+    - PMCUSZZ110101261
+    - PMCUSZZ110111029
+    - PMCUSZZ110101505
+    - PMCUSZZ110101503
+    - PMCUSZZ110111273
+    - PMCUSZZ110111272
+    - PMCUSZZ110111291
+    - PMCUSZZ110101270
+    - PMCUSZZ110101271
+    - PMCUSZZ110101290
+    - PMCUSZZ110110273
+    - PMCUSZZ110110272
+    - PMCUSZZ110100270
+    - PMCUSZZ110100290
+    - PMCUSZZ110110291
+    - PMCUSZZ110100271
+    - PMCUSZZ110111069
+    - PMCUSZZ110110069
+    - PMCUSZZ110111039
+    - PMCUSZZ110110039
+    - PMCUSZZ110111216
+    - PMCUSZZ110110216
+    - PMCUSZZ110111266
+    - PMCUSZZ110110266
+    - PMCUSZZ110111099
+    - PMCUSZZ110110099
+    - PMCUSZZ110111024
+    - PMCUSZZ110110024
+    - PMCUSZZ110111025
+    - PMCUSZZ110110025
+    - PMCUSZZ110111214
+    - PMCUSZZ110110214
+    - PMCUSZZ110111097
+    - PMCUSZZ110110097
+    - PMCUSZZ110111267
+    - PMCUSZZ110110267
+    - PMCUSZZ110111295
+    - PMCUSZZ110110295
+    - PMCUSZZ110111294
+    - PMCUSZZ110110294
+    - PMCUSZZ110111296
+    - PMCUSZZ110110296
+    - PMCUSZZ110111135
+    - PMCUSZZ110110135
+  channelSpecification:
+    authorizationConfiguration:
+      responseToActionCode:
+        in.zeta.gateway.common.omsclients.payment.exception.InvalidPaymentException_MIN_BAL_LIMIT_VIOLATED: DONOT_HONOR
+        in.zeta.gateway.common.omsclients.payment.exception.InvalidPaymentException_DISALLOWED_MERCHANT_ID: DONOT_HONOR
+        in.zeta.iso.commons.exceptions.DisallowedTransactionCurrencyCodeException_DISALLOWED_TRANSACTION_CURRENCY_CODE: DONOT_HONOR
+        in.zeta.gateway.common.omsclients.payment.exception.InvalidPaymentException_DISALLOWED_TRANSACTION_CURRENCY: DONOT_HONOR
+        in.zeta.iso.commons.exceptions.LostCardException: DONOT_HONOR
+      transactionExpirySpecification:
+        defaultConfiguration:
+          timeZone: EST
+          days: 8
+          hours: 0
+        ruleBasedConfigurations:
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: PREAUTH
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '18'
+                    allowedValues:
+                      - '5542'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: EST
+            hours: 2
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: PREAUTH
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '61.7'
+                    allowedValues:
+                      - '4'
+                  - fieldId: '18'
+                    disallowedValues:
+                      - '5542'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: EST
+            hours: 720
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: AUTHORIZATION
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '61.7'
+                    allowedValues:
+                      - '0'
+                  - fieldId: 48.61.5
+                    allowedValues:
+                      - '1'
+                  - fieldId: '18'
+                    disallowedValues:
+                      - '5542'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: EST
+            hours: 192
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: AUTHORIZATION
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '61.7'
+                    allowedValues:
+                      - '0'
+                  - fieldId: 48.61.5
+                    presence: O
+                    allowedValues:
+                      - '0'
+                  - fieldId: '18'
+                    disallowedValues:
+                      - '5542'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: EST
+            hours: 192
+            configType: ISSUER_DEFINED
+      authorizationAmountSpecification:
+        defaultConfiguration:
+          afdDataOnCurrencybasis:
+            '840':
+              maxLimit: '10000'
+              defaultBillingAmount: '000000000100'
+              defaultTransactionAmount: '000000000100'
+        ruleBasedConfigurations:
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  txnType: AUTOMATIC_FUEL_DISPENSER
+                  transactionOrigination: DOMESTIC
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  txnType: ECOM_AUTOMATIC_FUEL_DISPENSER
+                  transactionOrigination: DOMESTIC
+            afdDataOnCurrencybasis:
+              '840':
+                maxLimit: '10000'
+                defaultBillingAmount: '000000000100'
+                defaultTransactionAmount: '000000000100'
+            filteringCriteria: ANY_FILTER_SHOULD_PASS
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  txnType: AUTOMATIC_FUEL_DISPENSER
+                  transactionOrigination: INTERNATIONAL
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  txnType: ECOM_AUTOMATIC_FUEL_DISPENSER
+                  transactionOrigination: INTERNATIONAL
+            afdDataOnCurrencybasis:
+              '840':
+                maxLimit: '10000'
+                defaultBillingAmount: '000000000100'
+                defaultTransactionAmount: '000000000100'
+            filteringCriteria: ANY_FILTER_SHOULD_PASS
+    clearanceConfiguration: '{"isRefundGreaterThanAuthSupported": "false"}'
+    commonConfiguration: '{"forwardingInstitutionIDCode": "223872", "default.action.code" : "DONOT_HONOR"}'
+    flags: '{"switch.capture-with-amount": "ACTIVE","avs.service-indicator.1": "ACTIVE","payment.apis.v2.enabled": "INACTIVE"}'

@@ -1,0 +1,35 @@
+
+kind: PostingCategorySpecification
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.aura.postingcategoryspecification.module.utilized-limit-colus008001
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_aura/posting-category-specification/posting-category-specification_utilized-limit-colus008001.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: aura.postingcategoryspecification.module.utilized-limit-colus008001
+    name: aura.postingcategoryspecification.module.utilized-limit-colus008001
+    description: aura.postingcategoryspecification.module.utilized-limit-colus008001
+    tenantId: '600309'
+    tenantCode: lsg
+  coaCode: COLUS008001
+  code: UTILIZED_LIMIT
+  description: UTILIZED_LIMIT_colus008001
+  name: UTILIZED_LIMIT_colus008001
+  attributionFunction:
+    function: |-
+      function apply(data) {
+          return {
+              value: data.ledgerRecord.amount,
+              recordType: data.ledgerRecord.recordType
+          };
+      }
+    type: JAVASCRIPT
+  selectionCriteria:
+    - attrKey: transactionOriginator
+      attrVal: LLMS
+      txnCategoryComparator: EQUALS
+  selectionCriteriaCondition: AND
+  status: ENABLED

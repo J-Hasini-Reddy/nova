@@ -1,0 +1,30 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.athena.authorization-gateway.unsecured
+spec:
+  metadata:
+    id: athena.authorization-gateway.unsecured
+    name: US Unsecured Authorization Gateway
+    description: Authorization Gateway for US Unsecured Credit Cards 
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      code: AGWUSUNSECURE001
+      description: Authorization Gateway for US Unsecured Credit Cards
+      name: US Unsecured Authorization Gateway
+      status: ACTIVE
+      operations:
+        authorize:
+          baseUrl: https://us-unsecured-gateway.example.com/v1
+          connectTimeoutInMs: 1000
+          requestTimeoutInMs: 1000
+          status: ACTIVE
+          responseVerification:
+            signatoryJID: unsecured-us@issuer.com
+      # NOTE: For unsecured cards, authorization logic is based on credit risk, cash-flow, and payment history. No collateral check is required.

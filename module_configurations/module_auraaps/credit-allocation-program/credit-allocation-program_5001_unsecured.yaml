@@ -1,0 +1,106 @@
+kind: CreditAllocationProgram
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.auraapps.creditallocationprogram.module.5001.unsecured
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+    module: auraapps
+    rrsd.zetaapps.in/space: aws-default-pp-mumbai
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_auraapps/credit-allocation-program/credit-allocation-program_5001_unsecured.yaml","tenantCode":"lsg"}'
+  namespace: auraapps
+spec:
+  config:
+    format: YAML
+    key: key
+    schemaInlineContent: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "lienMarkedDebitPosting": { "type": "boolean" },
+          "directed": { "type": "boolean" },
+          "voucherCodes": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "description": { "type": "string" },
+          "precedenceCode": { "type": "string" },
+          "code": { "type": "string" },
+          "accountStatus": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "status": { "type": "string" },
+                "finalChargeOffDate": { "type": "string" },
+                "type": { "type": "string" },
+                "reasonCode": { "type": "string" },
+                "tagTypeCode": { "type": "string" }
+              },
+              "required": [
+                "name",
+                "status",
+                "finalChargeOffDate",
+                "type",
+                "reasonCode",
+                "tagTypeCode"
+              ]
+            }
+          },
+          "validUntil": { "type": "string" },
+          "validFrom": { "type": "string" },
+          "status": { "type": "string" },
+          "billed": { "type": "boolean" },
+          "isBookDateGreaterThanLastStatementDatePlusXDays": { "type": "boolean" },
+          "daysAfterLastStatementDate": { "type": "integer" }
+        },
+        "required": [
+          "name",
+          "lienMarkedDebitPosting",
+          "directed",
+          "voucherCodes",
+          "description",
+          "precedenceCode",
+          "code",
+          "accountStatus",
+          "validUntil",
+          "validFrom",
+          "status"
+        ]
+      } 
+    schemaUrl: http://localhost
+    useVault: false
+    value:
+      accountStatus: []
+      directed: true
+      code: CRAUS00600
+      version: 1
+      description: Unified merchant credit allocation for Unsecured
+      productCode: UNSECURED
+      cardTier: UNSECURED
+      creditAllocationSpecification:
+        code: CRSUS009902
+        version: 1
+      interestBucketRouting:
+        PARTNER_GROCERIES_MCC_5411: RETAIL_INTEREST_UNSECURED
+        PARTNER_GAS_MCC_5541: FUEL_INTEREST_UNSECURED
+        PARTNER_GAS_MCC_5542: FUEL_INTEREST_UNSECURED
+      lienMarkedDebitPosting: false
+      name: Unified Merchant Credits - Unsecured
+      precedenceCode: '10'
+      status: ENABLED
+      validFrom: '2000-01-01T00:00:00.000-05:00'
+      validUntil: '2999-01-01T00:00:00.000-05:00'
+      voucherCodes:
+      - PARTNER_GROCERIES_MCC_5411
+      - PARTNER_GAS_MCC_5541
+      - PARTNER_GAS_MCC_5542
+  metadata:
+    id: auraapps.creditallocationprogram.module.5001.unsecured
+    name: auraapps.creditallocationprogram.module.5001.unsecured
+    description: auraapps.creditallocationprogram.module.5001.unsecured
+    tenantId: '600309'
+    tenantCode: lsg

@@ -17,7 +17,7 @@ spec:
     - permanent
     - residence # Replaces 'billing' for US accuracy
   
-  # Ensures graduation from Genesis to Rise is reported as a positive milestone
+  # Ensures graduation from secured to unsecured is reported as a positive milestone
   accountClosureReporting:
     status: CLOSURE_ACCEPTED 
   

@@ -1,0 +1,29 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyCardReplacementFeePolicy
+metadata:
+  name: lsg.ruby.rubycardreplacementfeepolicy.subprime_us
+spec:
+  metadata:
+    id: ruby.rubycardreplacementfeepolicy.subprime_us
+    name: Subprime US Credit Card Replacement Fee Policy
+    description: Card replacement fee policy for subprime US credit card
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  name: Subprime US Credit Card Replacement Fee Policy
+  code: CRFUS_SUBPRIME_001
+  description: Replacement fee policy tailored for subprime US credit card customers
+  modelParameters:
+    fixedAmount:
+      baseFee:
+        amount: 10
+        currency: USD
+    replacementCardIdentifier:
+      - key: cardSkuID
+        value:
+          - SKUUS005001_CARDWORKSUAT
+  validFrom: '2026-03-22T00:00:00.000-05:00'
+  validTill: '2999-01-01T00:00:00.000-05:00'
+  templateCode: us-credit

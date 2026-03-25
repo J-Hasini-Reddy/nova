@@ -1,0 +1,24 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.athena.configuration.module.default.payment-account-provider-unsecured
+spec:
+  metadata:
+    id: athena.configuration.module.default.payment-account-provider-unsecured
+    name: Payment Account Provider for US Unsecured
+    description: Credit Card Payment Account Provider for US Unsecured (no collateral)
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      code: PAPUSUNSECURE001
+      name: Payment Account Provider for US Unsecured
+      description: Credit Card Payment Account Provider for US Unsecured
+      status: ACTIVE
+      providedAccountSchemaURI: schema://subjects/id-data-schema/versions/1
+      authorizationGatewayCodes:
+        - AGWUSUNSECURE001

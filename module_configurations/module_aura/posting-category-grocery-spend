@@ -1,0 +1,39 @@
+
+# Why: Grocery is the most consistent essential
+# spend for subprime customers in the US —
+# consistent grocery payments = responsible
+# behavior → improves risk_pulse_score in ADE
+kind: PostingCategorySpecification
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.aura.postingcategoryspecification.module.grocery-spend-colus008001
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_aura/posting-category-specification/posting-category-specification_grocery-spend-colus008001.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: aura.postingcategoryspecification.module.grocery-spend-colus008001
+    name: aura.postingcategoryspecification.module.grocery-spend-colus008001
+    description: Tracks grocery spends for subprime credit behavior scoring
+    tenantId: '600309'
+    tenantCode: lsg
+  coaCode: COLUS008001        # US COA
+  code: GROCERY_SPEND         # ⭐ NEW
+  description: GROCERY_SPEND_COLUS008001
+  name: GROCERY_SPEND_COLUS008001
+  attributionFunction:
+    function: |-
+      function apply(data) {
+          return {
+              value: data.ledgerRecord.amount,
+              recordType: data.ledgerRecord.recordType
+          };
+      }
+    type: JAVASCRIPT
+  selectionCriteria:
+    - attrKey: super-card.mcc        # MCC code of the transaction
+      attrVal: "5411, 5412"          # ⭐ 5411 = Grocery Stores, 5412 = Supermarkets
+      txnCategoryComparator: ANYOF   # Match ANY of the MCC codes
+  selectionCriteriaCondition: AND
+  status: ENABLED

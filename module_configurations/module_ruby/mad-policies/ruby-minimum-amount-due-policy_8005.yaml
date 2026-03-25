@@ -1,0 +1,31 @@
+kind: RubyMinimumAmountDuePolicy
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.ruby.rubyminimumamountduepolicy.subprime.8005
+  namespace: ruby
+spec:
+  metadata:
+    id: ruby.rubyminimumamountduepolicy.subprime.8005
+    name: Subprime Minimum Amount Due Policy
+    description: Subprime MAD Policy for US credit card
+    tenantId: '600309'
+    tenantCode: lsg
+  code: MADUS008005_SUBPRIME
+  minimumMadAmount: 200
+  modelParameters:
+    currentDueThreshold: '200'
+    roundingForCurrentDue: ROUNDUP
+    minimumAmountDueThreshold: '200'
+    roundingForMinimumAmountDue: NEAR
+  postingCategoriesComponent:
+    - percentage: 1
+      postingCategory: LateFeeBilled
+    - percentage: 1
+      postingCategory: LateFeeUnbilled
+    - percentage: 1
+      postingCategory: OverlimitFeeBilled
+    - percentage: 1
+      postingCategory: OverlimitFeeUnbilled
+  validFrom: '2000-01-01T00:00:00.000-07:00'
+  validTill: '2099-01-01T00:00:00.000-07:00'
+  templateCode: us-credit

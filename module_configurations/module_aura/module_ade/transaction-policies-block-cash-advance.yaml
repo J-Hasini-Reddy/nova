@@ -1,0 +1,38 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: TransactionPolicy
+metadata:
+  name: lsg.aura.transaction-policy.block-cash-advance-installement-405
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+spec:
+  accountsApplicableTo:
+    - account.provider: ruby
+  coaCode: COAUS005001
+  code: TPOIN00400405
+  customRules:
+    - action: META_DETAIL_CHANGE
+      errorCode: DISALLOWED_TRANSACTION_TYPE
+      evaluationFunction:
+        function: function apply(policyContext) { 
+            var attributes = policyContext.posting.attributes; 
+            var transactionInstallment = attributes['super-card.installment-plan-type']; 
+            if (transactionInstallment === 'NULL') { 
+              return true; 
+            } 
+            
+            return ['ATM-installment-withdrawal', 
+                    'CASH_ADVANCE',        # ⭐ NEW — blocks bank counter cash
+                    'ATM_WITHDRAWAL'       # ⭐ NEW — blocks direct ATM cash
+                   ].indexOf(transactionInstallment) == -1;
+           
+          }
+        type: JAVASCRIPT
+  description: Block all cash advance types for Bank Xee subprime customers
+  effectiveFrom: '2018-04-01T00:00:00.000Z'
+  errorCodes:
+    - code: DECLINETRANSACTIONTYPE
+      description: Block all cash advance types for Bank Xee subprime customers
+      errorCode: DISALLOWED_TRANSACTION_TYPE
+  expiresAt: '2999-12-31T00:00:00.000Z'
+  policyScope: EACH_ACCOUNT_OF_ACCOUNT_HOLDER
+  violationAction: DECLINE_AND_NOTIFY

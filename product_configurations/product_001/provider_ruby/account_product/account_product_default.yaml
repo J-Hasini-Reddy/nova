@@ -5,8 +5,8 @@ metadata:
 spec:
   metadata:
     id: ruby.configuration.product.prdus005001.default.account-product
-    name: Cardworks UAT Account Product 5001
-    description: Cardworks UAT Account Product 5001
+    name: Account Product 5001
+    description: Account Product 5001
     tenantId: '600309'
     tenantCode: lsg
   config:
@@ -16,7 +16,7 @@ spec:
     isEncrypted: false
     useVault: false
     value:
-      name: Merrick Bank Unsecured 5001
+      name: Unsecured 5001
       code: RAPUS005001
       coaCode: COAUS005001
       accountProductFamilyCode: APFUS005001

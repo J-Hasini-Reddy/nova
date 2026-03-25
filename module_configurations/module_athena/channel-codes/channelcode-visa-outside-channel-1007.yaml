@@ -1,0 +1,313 @@
+kind: Channelcode
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.athena.channelcode.visa-outside-channel-1007
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"/.defaults/module_configurations/module_athena/tree/root/t0/module_configurations/module_athena/channel-codes/channelcode-visa-outside-channel-1007.yaml","tenantCode":"lsg"}'
+  namespace: athena
+spec:
+  metadata:
+    id: athena.channelcode.visa-outside-channel-1007
+    name: visa-outside-channel-1007
+    description: Sample Channelcode
+    requester:
+      module: athena
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  channelCodeId: CHNUSZZVISA01
+  code: CHNUSZZVISA01
+  name: US VISA Off-Us Channel
+  description: US VISA Off-Us Channel (International transactions blocked for US cards)
+  status: ACTIVE
+  channelType: US VISA Off-Us Channel
+  tags: [US_CARDS, BLOCK_INTERNATIONAL]
+  paymentCodes:
+    # Only domestic payment codes for US VISA cards are allowed. International codes are blocked.
+    - PMCUSZZVISA011001
+    - PMCUSZZVISA011002
+    - PMCUSZZVISA011003
+    - PMCUSZZVISA011004
+    - PMCUSZZVISA011005
+    # International payment codes removed
+    - PMCINZZ100710005
+    - PMCINZZ100700005
+    - PMCINZZ100710030
+    - PMCINZZ100700030     
+    - PMCINZZ100700034
+    - PMCINZZ100721103
+    - PMCINZZ100721104
+    - PMCINZZ100720103
+    - PMCINZZ100720104
+    - PMCINZZ100731100
+    - PMCINZZ100731042
+    - PMCINZZ100731101
+    - PMCINZZ100731043
+    - PMCINZZ100730100
+    - PMCINZZ100730042
+    - PMCINZZ100730101
+    - PMCINZZ100730043
+    - PMCINZZ100701005
+    - PMCINZZ100711030
+    - PMCINZZ100701030
+    - PMCINZZ100701010
+    - PMCINZZ100701046
+    - PMCINZZ100701054
+    - PMCINZZ100701055
+    - PMCINZZ100701052
+    - PMCINZZ100700047
+    - PMCINZZ100700056
+    - PMCINZZ100700055
+    - PMCINZZ100700052
+    - PMCINZZ100701056
+    - PMCINZZ100701200
+    - PMCINZZ100711214
+    - PMCINZZ100701203
+    - PMCINZZ100710217
+    - PMCINZZ100710215
+    - PMCINZZ100701210
+    - PMCINZZ100711216
+    - PMCINZZ100700201
+    - PMCINZZ100700203
+    - PMCINZZ100700211
+    - PMCINZZ100710214
+    - PMCINZZ100710216
+    - PMCINZZ100700120
+    - PMCINZZ100700121
+    - PMCINZZ100701120
+    - PMCINZZ100701121
+    - PMCINZZ100720120
+    - PMCINZZ100720121
+    - PMCINZZ100721120
+    - PMCINZZ100721121
+    - PMCINZZ100740201
+    - PMCINZZ100740203
+    - PMCINZZ100740211
+    - PMCINZZ100700501
+    - PMCINZZ100700058
+    - PMCINZZ100701058
+    - PMCINZZ100700502
+    - PMCINZZ100700118
+    - PMCINZZ100700119
+    - PMCINZZ100701118
+    - PMCINZZ100701119
+    - PMCINZZ100720118
+    - PMCINZZ100720119
+    - PMCINZZ100721118
+    - PMCINZZ100721119
+    - PMCINZZ100751040
+    - PMCINZZ100750040
+    - PMCINZZ100721106
+    - PMCINZZ100720106
+    - PMCINZZ100751010
+    - PMCINZZ100750010
+    - PMCINZZ100751003
+    - PMCINZZ100750003
+    - PMCINZZ100711095
+    - PMCINZZ100751215
+    - PMCINZZ100750215
+    - PMCINZZ100751013
+    - PMCINZZ100750013
+  channelSpecification:
+    authorizationConfiguration:
+      transactionExpirySpecification:
+        defaultConfiguration:
+          timeZone: IST
+          days: 5
+          hours: 19
+        ruleBasedConfigurations:
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: AUTHORIZATION
+                  transactionOrigination: DOMESTIC
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '18'
+                    disallowedValues:
+                      - '5542'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: IST
+            hours: 1
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: AUTHORIZATION
+                  transactionOrigination: DOMESTIC
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '18'
+                    allowedValues:
+                      - '5542'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: IST
+            hours: 2
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: PREAUTH
+                  transactionOrigination: DOMESTIC
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '0'
+                    allowedValues:
+                      - '0100'
+                  - fieldId: '63.2'
+                  - fieldId: '63.3'
+                    presence: O
+                    disallowedValues:
+                      - '3900'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: IST
+            hours: 1
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: PREAUTH
+                  transactionOrigination: DOMESTIC
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '0'
+                    allowedValues:
+                      - '0120'
+                  - fieldId: '25'
+                    allowedValues:
+                      - '06'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            configType: NO_CHANGE_IN_EXPIRY
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: PREAUTH
+                  transactionOrigination: DOMESTIC
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '0'
+                    allowedValues:
+                      - '0100'
+                  - fieldId: '63.3'
+                    allowedValues:
+                      - '3900'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            configType: NO_CHANGE_IN_EXPIRY
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: AUTHORIZATION
+                  transactionOrigination: INTERNATIONAL
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '19'
+                    disallowedValues:
+                      - '392'
+                      - '840'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: IST
+            days: 9
+            hours: 19
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: AUTHORIZATION
+                  transactionOrigination: INTERNATIONAL
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '19'
+                    allowedValues:
+                      - '392'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: IST
+            days: 31
+            hours: 19
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: PREAUTH
+                  transactionOrigination: INTERNATIONAL
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '0'
+                    allowedValues:
+                      - '0100'
+                  - fieldId: '63.2'
+                  - fieldId: '63.3'
+                    presence: O
+                    disallowedValues:
+                      - '3900'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: IST
+            hours: 1
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: PREAUTH
+                  transactionOrigination: INTERNATIONAL
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '0'
+                    allowedValues:
+                      - '0120'
+                  - fieldId: '25'
+                    allowedValues:
+                      - '06'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            configType: NO_CHANGE_IN_EXPIRY
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: PREAUTH
+                  transactionOrigination: INTERNATIONAL
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '0'
+                    allowedValues:
+                      - '0100'
+                  - fieldId: '63.3'
+                    allowedValues:
+                      - '3900'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            configType: NO_CHANGE_IN_EXPIRY
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: AUTHORIZATION
+                  transactionOrigination: INTERNATIONAL
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '19'
+                    allowedValues:
+                      - '840'
+                  - fieldId: '18'
+                    disallowedValues:
+                      - '5542'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: IST
+            hours: 2
+            configType: ISSUER_DEFINED
+          - filters:
+              - type: TRANSACTION_PROPERTIES
+                transactionProperties:
+                  authType: AUTHORIZATION
+                  transactionOrigination: INTERNATIONAL
+              - type: ISO_DATA_ELEMENTS
+                dataElementInclusions:
+                  - fieldId: '19'
+                    allowedValues:
+                      - '840'
+                  - fieldId: '18'
+                    allowedValues:
+                      - '5542'
+            filteringCriteria: ALL_FILTERS_SHOULD_PASS
+            timeZone: IST
+            hours: 3
+            configType: ISSUER_DEFINED
+    clearanceConfiguration: '{"payment.v2.apis.enabled": "false", "isReversalGreaterThanAuthSupported": "true"}'
+    flags: '{"switch.capture-with-amount": "ACTIVE", "authorization.payment.v2.apis.enabled": "INACTIVE"}'

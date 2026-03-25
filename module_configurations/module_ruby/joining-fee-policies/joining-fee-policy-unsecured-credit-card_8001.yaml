@@ -1,0 +1,43 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: EmeraldJoiningFeePolicy
+metadata:
+  name: lsg.bankxee.joiningfeepolicy.unsecured.7003
+
+spec:
+  metadata:
+    id: bankxee.joiningfeepolicy.unsecured.7003
+    name: Bank Xee Unsecured Card Joining Fee Policy
+    description: Joining Fee Policy for Unsecured Subprime Credit Card
+    requester:
+      module: bankxee-module
+      moduleVersion: 1.0.0
+    tenantId: '700001'
+    tenantCode: lsg
+
+  name: Bank Xee Unsecured Joining Fee Policy
+  code: JFFUS007003
+  description: Unsecured Card - Moderate Fee with Conditional Waiver
+
+  modelParameters:
+    fixedAmount:
+      baseFee:
+        amount: 75
+        currency: USD
+
+  chargeStrategy: HOLD-THEN-APPLY
+
+  chargeStrategyConfig:
+    placeHold:
+      applyOn: keyDateSpecification://code/OPEN_DATE
+      voucherCode: UNSECURED_JOINING_FEE_HOLD
+      expiryInDays: '90'
+
+    releaseHold:
+      applyOn: keyDateSpecification://code/FIRST_USAGE_DATE
+      phase: EOPI
+      voucherCode: UNSECURED_JOINING_FEE_REVERSAL
+
+  validFrom: '2025-01-01T00:00:00.000-07:00'
+  validTill: '2035-01-01T00:00:00.000-07:00'
+
+  templateCode: us-subprime-unsecured

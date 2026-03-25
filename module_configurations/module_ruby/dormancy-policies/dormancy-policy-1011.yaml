@@ -1,0 +1,36 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyDormancyPolicy
+metadata:
+  name: lsg.ruby.rubydormancypolicy.1011
+spec:
+  metadata:
+    id: ruby.rubydormancypolicy.1011
+    name: 1011 Dormancy Policy
+    description: 1011 Dormancy Policy
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  name: Dormancy Policy
+  code: DORIN001011
+  description: Dormancy Policy for US Subprime Credit Cards
+  applicableVoucherCodesCredit:
+    - CARD_PURCHASE_CLEARANCE_REFUND
+    - CARD_CASH_CLEARANCE_REFUND
+    - REPAYMENT
+  applicableVoucherCodesDebit:
+    - CARD_PURCHASE_PLACE_HOLD
+    - CARD_CASH_PLACE_HOLD
+    - CARD_PURCHASE_CLEARANCE_AGAINST_HOLD
+    - CARD_CASH_CLEARANCE_AGAINST_HOLD
+  dormancyRules:
+    - level: 1
+      description: No activity for 90 days (Mark Dormant, Block Transactions, Notify Customer)
+      days: 90
+    - level: 2
+      description: No activity for 180 days (Check Outstanding Balance, Close or Restrict Account)
+      days: 180
+  validFrom: '2015-07-25T23:09:01.795+07:00'
+  validTill: '2099-07-25T23:09:01.795+07:00'
+  templateCode: us-credit

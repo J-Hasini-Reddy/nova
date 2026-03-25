@@ -1,0 +1,26 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyServiceFeePolicy
+metadata:
+  name: lsg.ruby.rubyservicefeepolicy.6001-subprime
+spec:
+  code: SERUS006001
+  description: Subprime US Credit Card Service Fee Policy
+  metadata:
+    id: ruby.rubyservicefeepolicy.6001
+    name: 6001 Subprime US Credit Card Service Fee Policy
+    description: Policy for Bank Xee's US subprime credit card service fee adjustments
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  modelParameters:
+    baseStateLocation: TN
+    feeAdjustmentAllowed: true
+    subprimeFeeTier: true
+    maxServiceFee: 75.00
+    minServiceFee: 5.00
+  name: Subprime US Credit Card Service Fee Adjustment Policy
+  templateCode: us-credit
+  validFrom: '2026-01-01T00:00:00.000+00:00'
+  validTill: '2999-12-31T23:59:59.000+00:00'

@@ -1,0 +1,32 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: RubyAnnualFeePolicy
+metadata:
+  name: lsg.ruby.rubyannualfeeepolicy.subprime.us
+spec:
+  metadata:
+    id: ruby.rubyannualfeeepolicy.subprime.us
+    name: Bank Xee US Subprime Annual Fee Policy
+    description: Annual Fee Policy for Bank Xee US Subprime Credit Card
+    requester:
+      module: ruby-module-e2e
+      moduleVersion: 0.0.1
+    tenantId: '600309'
+    tenantCode: lsg
+  name: Bank Xee US Subprime Annual Fee Policy
+  code: ANFUS.SUBPRIME.US
+  description: Annual fee for US subprime credit card
+  modelParameters:
+    fixedAmount:
+      baseFee:
+        amount: 0
+        currency: USD
+  chargeStrategy: DIRECT-APPLY
+  chargeStrategyConfig:
+    application:
+      applicabilityOnwards: keyDateSpecification://code/FIRST_ANNIVERSARY_OF_ACCOUNT_OPEN_DATE
+      applyOn: keyDateSpecification://code/BILLING_DATE
+      offsetDaysForValueDate: '0'
+  remarks: Annual Fee (US subprime, billed monthly from first anniversary)
+  validFrom: '2026-03-22T00:00:00.000-05:00'
+  validTill: '2099-12-31T23:59:59.000-05:00'
+  templateCode: us-credit

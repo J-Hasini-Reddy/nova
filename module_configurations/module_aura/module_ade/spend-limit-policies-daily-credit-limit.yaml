@@ -1,0 +1,61 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: TransactionPolicy
+metadata:
+  name: lsg.aura.transaction-policy.daily-credit-limit-should-not-exceed
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+spec:
+  accountsApplicableTo:
+    - account.provider: ruby
+  coaCode: COAUS003001
+  code: TPOUS00300102
+  customRules:
+    - action: META_DETAIL_CHANGE
+      errorCode: DAILY_LIMIT_EXCEEDED
+      evaluationFunction:
+        function: function apply(policyContext) {
+            var attributes = policyContext.posting.attributes;
+            var creditLimit = policyContext['customFields']['CREDIT_LIMIT'] == undefined
+              ? 0 : policyContext['customFields']['CREDIT_LIMIT'];
+            var currentSpend = policyContext['afterPostingLTDCategoriesBalances']['Spends'] == undefined
+              ? 0 : policyContext['afterPostingLTDCategoriesBalances']['Spends']['currentBalance'];
+
+           
+            var isGracePeriod = policyContext['customFields']['grace_period_active'] === 'true';
+            var isGraduated   = policyContext['customFields']['credit_upgraded'] === 'true';
+
+           
+            var dailyCap = isGracePeriod
+              ? creditLimit * 0.25
+              : isGraduated
+              ? creditLimit * 0.75
+              : creditLimit * 0.50;   
+
+            
+            var dailySpend = policyContext['afterPostingLTDCategoriesBalances']['DailySpends'] == undefined
+              ? 0 : policyContext['afterPostingLTDCategoriesBalances']['DailySpends']['currentBalance'];
+
+            return dailyCap >= dailySpend;
+          }
+        type: JAVASCRIPT
+
+  
+  description: Enforce 3-tier daily spending cap for Bank Xee subprime customers
+
+ 
+  effectiveFrom: '2022-03-24T11:54:14.000Z'
+
+  errorCodes:
+    - code: DAILYCREDITLIMITSHOULDNOTEXCEED
+      
+      description: Daily spending cap exceeded — 25% grace period / 50% normal / 75% graduated
+     
+      errorCode: DAILY_LIMIT_EXCEEDED
+
+ 
+  expiresAt: '2999-12-31T00:00:00.000Z'
+  policyScope: EACH_ACCOUNT_OF_ACCOUNT_HOLDER
+  violationAction: DECLINE_AND_NOTIFY
+
+  viewConfig:
+    displayName: transaction-policies-daily-credit-limit-3-tier-cap

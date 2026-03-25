@@ -1,0 +1,69 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.acropolis-pci.configuration.product.prdus00300111.default.card-product
+spec:
+  metadata:
+    id: acropolis-pci.configuration.product.prdus00300111.default.card-product
+    name: Bank Xee Nova Physical Card Product
+    description: Bank Xee Nova Physical Card Product
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    schemaUrl: http://localhost
+    schemaInlineContent: |
+      {"properties":{"bin":{"type":"string"},"cardActivationPolicy":{"items":{"properties":{"digital.activation.type":{"enum":["MANUAL","AUTO_ACTIVATION"],"type":"string"},"enabled":{"type":"boolean"},"physical.activation.type":{"enum":["MANUAL","AUTO_ACTIVATION"],"type":"string"}},"type":"object"},"type":"array"},"cardReissuancePolicy":{"items":{"properties":{"enabled":{"type":"boolean"},"overrideAllowed":{"type":"boolean"},"policyType":{"enum":["ACTIVATE_ON_ISSUANCE","TERMINATE_SOURCE_CARD","SWAP_PIN_FROM_SOURCE_CARD","SWAP_TOKENS_FROM_SOURCE_CARD"],"type":"string"}},"type":"object"},"type":"array"},"cardRenewalPolicy":{"items":{"properties":{"enabled":{"type":"boolean"},"overrideAllowed":{"type":"boolean"},"policyType":{"enum":["ACTIVATE_ON_ISSUANCE","TERMINATE_SOURCE_CARD","SWAP_PIN_FROM_SOURCE_CARD","SWAP_TOKENS_FROM_SOURCE_CARD"],"type":"string"}},"type":"object"},"type":"array"},"cardReplacementPolicy":{"items":{"properties":{"enabled":{"type":"boolean"},"overrideAllowed":{"type":"boolean"},"policyType":{"enum":["ACTIVATE_ON_ISSUANCE","TERMINATE_SOURCE_CARD","SWAP_TOKENS_FROM_SOURCE_CARD"],"type":"string"}},"type":"object"},"type":"array"},"code":{"type":"string"},"description":{"type":"string"},"expiry":{"properties":{"month":{"type":"number"},"year":{"type":"number"}},"type":"object"},"features":{"items":{"enum":["EMV","MAG_STRIPE","NFC"],"type":"string"},"type":"array"},"name":{"type":"string"},"range":{"type":"string"}},"type":"object"}
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      cardActivationPolicy:
+        - digital.activation.type: AUTO_ACTIVATION
+          enabled: true
+          physical.activation.type: MANUAL_ACTIVATION
+      cardReissuancePolicy:
+        - enabled: false
+          overrideAllowed: true
+          policyType: TERMINATE_SOURCE_CARD
+      cardRenewalPolicy:
+        - enabled: true
+          overrideAllowed: false
+          policyType: SWAP_PIN_FROM_SOURCE_CARD
+      cardReplacementPolicy:
+        - enabled: true
+          overrideAllowed: false
+          policyType: TERMINATE_SOURCE_CARD
+      code: CRPUS00300111_LSG
+      cardType: PHYSICAL
+      description: Bank Xee Nova Physical Card Product
+      expiry:
+        month: 1
+        year: 4
+      status: ENABLED
+      binRangeSelectionStrategy: CHRONOLOGICAL
+      binRanges:
+        - bin: '88883001'
+          range: '11'
+      features:
+      - MAG_STRIPE
+        - EMV
+        # NFC removed intentionally for subprime!
+        # Original idea! NFC/tap-to-pay is NOT enabled for subprime initially 
+        # — reduces contactless fraud risk! After credit upgrade → NFC enabled!
+
+
+      acsProviderConfig:
+        enrollmentConfigs:
+          - enrollmentType: CARD_ENROLLMENT
+            enrollmentCredentials:
+              - EMAIL
+              - PHONE_NUMBER
+            enabled: true
+            domainID: 600309.cardacs
+      name: Sparrow Card Product For Bin 88883001 Range 11
+  viewConfig:
+    angelosSchema:
+      view:
+        entityId: angelos.acropolis.card-product
+    displayName: Sparrow Card Product For Bin 88883001 Range 11

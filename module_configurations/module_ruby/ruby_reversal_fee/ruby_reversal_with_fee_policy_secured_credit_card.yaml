@@ -1,0 +1,47 @@
+kind: RubyRepaymentReversalWithFeePolicy
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.ruby.rubyrepaymentreversalwithfeepolicy.module.subprime
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_ruby/repayment-reversal-with-fee-policies/ruby-repayment-reversal-with-fee-policy_subprime.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: ruby.rubyrepaymentreversalwithfeepolicy.module.subprime
+    name: Subprime Repayment Reversal with Fee Policy
+    description: Subprime Repayment Reversal with Fee Policy tailored for US subprime credit cards
+    tenantId: '600309'
+    tenantCode: lsg
+  name: Subprime Repayment Reversal with Fee Policy
+  code: RRFUS008SP
+  description: Subprime Repayment Reversal with Fee Policy
+  modelParameters:
+    assessmentType: REPEATED_OFFENCE
+    restrictOnOtherFees:
+      - LateFee
+    chequeReturnReasonCodes:
+      - CHEQUE_RETURN_WITH_FEE
+      - INSUFFICIENT_FUNDS
+      - ACCOUNT_CLOSED
+      - UNABLE_TO_LOCATE_ACCOUNT
+      - INVALID_ACCOUNT_NUMBER
+      - CUSTOMER_REVOKED_AUTHORIZATION
+      - PAYMENT_STOPPED
+      - INVALID_ACH_ROUTING_NUMBER
+      - BENEFICIARY_OR_ACCOUNT_HOLDER_DECEASED
+      - ACCOUNT_FROZEN_OR_RETURNED_PER_OFAC
+    firstOccurrenceAmount:
+      baseAmount: 1500
+    repeatedOccurrenceAmount:
+      baseAmount: 1500
+    ceilingLimitLevel: MINIMUMPAYMENTDUE
+    maxFeeDebitsPerCycle: 1
+    repeatOccurrenceWindow:
+      type: CYCLES
+      count: '6'
+    considerReversedInstances: true
+  precedenceCode: ZZ0015
+  validFrom: '2025-01-01T00:00:00.000-07:00'
+  validTill: '2099-01-01T00:00:00.000-07:00'
+  templateCode: us-credit

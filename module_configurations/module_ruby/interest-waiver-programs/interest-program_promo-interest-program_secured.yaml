@@ -1,0 +1,41 @@
+apiVersion: rrsd.zetaapps.in/v1alpha1
+kind: Configuration
+metadata:
+  name: promo-interest-program-secured
+spec:
+  metadata:
+    id: promo-interest-program-secured
+    name: Bank Xee Secured Subprime Credit Card Program
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      name: Bank Xee Secured Subprime Credit Card Program
+      code: BXSUBSEC001
+      description: Secured subprime credit card interest program
+      type: Promotion
+      validFrom: '2026-04-01T00:00:00.000+07:00'
+      validUntil: '2036-12-31T00:00:00.000+07:00'
+      interestRules:
+        - applicableTo:
+            minValueThreshold: 100
+            maxValueThreshold: 500
+            postingCategories:
+              - '*'
+            transactionSelectionCriterion: |
+              function evaluate(ruleContext) { return true; }
+          modelParameters:
+            rateTable:
+              code: SECURED_SUBPRIME_RATE
+              version: 1
+            gracePeriodType: ABSOLUTE
+            gracePeriod: 25
+          precedenceCode: 100
+          ruleId: SECURED_RULE_01
+      attributes:
+        cardType: Secured
+        region: US

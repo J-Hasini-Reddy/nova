@@ -1,0 +1,62 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.acropolis-pci.configuration.product.prdus00300116.virtual-300116.card-product
+  labels:
+    rrsd.zetaapps.in/day: day-one
+  annotations:
+spec:
+  metadata:
+    id: acropolis-pci.configuration.product.prdus00300116.virtual-300116.card-product
+    name: Bank Xee Nova Virtual Card Product
+    description: Bank Xee Nova Virtual Card Product
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    schemaUrl: http://localhost
+    schemaInlineContent: |
+      {"properties":{"binRangeSelectionStrategy":{"enum":["CHRONOLOGICAL","RANDOM"],"type":"string"},"binRanges":{"items":{"properties":{"bin":{"type":"string"},"range":{"type":"string"}},"type":"object"},"type":"array"},"cardActivationPolicy":{"items":{"properties":{"digital.activation.type":{"enum":["MANUAL","AUTO_ACTIVATION"],"type":"string"},"physical.activation.type":{"enum":["MANUAL","AUTO_ACTIVATION"],"type":"string"}},"type":"object"},"type":"array"},"code":{"type":"string"},"description":{"type":"string"},"expiry":{"properties":{"month":{"type":"number"},"year":{"type":"number"}},"type":"object"},"features":{"items":{"enum":["EMV","MAG_STRIPE","NFC"],"type":"string"},"type":"array"},"name":{"type":"string"},"status":{"enum":["ENABLED","DISABLED","DELETED"],"type":"string"},"tags":{"items":{"properties":{"tagType":{"enum":["VBO"],"type":"string"},"tagValue":{"type":"string"}},"type":"object"},"type":"array"}},"type":"object"}
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      binRangeSelectionStrategy: CHRONOLOGICAL
+      binRanges:
+        - bin: '88883001'
+          range: '16'
+      cardActivationPolicy:
+        - digital.activation.type: AUTO_ACTIVATION
+          enabled: true
+          physical.activation.type: MANUAL_ACTIVATION
+      cardReissuancePolicy:
+        - enabled: false
+          overrideAllowed: false
+          policyType: TERMINATE_SOURCE_CARD
+      cardRenewalPolicy:
+        - enabled: true
+          overrideAllowed: false
+          policyType: SWAP_PIN_FROM_SOURCE_CARD
+      cardReplacementPolicy:
+        - enabled: true
+          overrideAllowed: false
+          policyType: TERMINATE_SOURCE_CARD
+      code: CRPUS00300116
+      cardType: DIGITAL
+      description: Bank Xee Nova Virtual Card Product
+      expiry:
+        month: 3
+        year: 4
+      features:
+        - MAG_STRIPE
+        - EMV
+      acsProviderConfig:
+        enrollmentConfigs:
+          - enrollmentType: CARD_ENROLLMENT
+            enrollmentCredentials:
+              - EMAIL
+              - PHONE_NUMBER
+            enabled: true
+            domainID: 600309.acs
+      name: Bank Xee Nova Virtual Card Product
+      status: ENABLED

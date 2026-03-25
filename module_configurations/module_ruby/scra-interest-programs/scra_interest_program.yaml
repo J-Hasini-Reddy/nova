@@ -1,0 +1,146 @@
+kind: Configuration
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.ruby.configuration.module.scra-program-coa4-3003.scra-program
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_ruby/scra-interest-programs/interest-program_scra-program-coa4-3003.yaml","tenantCode":"lsg"}'
+  namespace: ruby
+spec:
+  metadata:
+    id: ruby.configuration.module.scra-program-coa4-3003.scra-program
+    name: ruby.configuration.module.scra-program-coa4-3003.scra-program
+    description: SCRA Interest Program customized for US Subprime Credit Card
+    tenantId: '600309'
+    tenantCode: lsg
+  config:
+    format: YAML
+    schemaUrl: http://localhost
+    schemaInlineContent: |
+      {
+        "properties": {
+          "amountTiers": {
+            "items": {
+              "properties": {
+                "fromAmount": { "type": "number" },
+                "toAmount": { "type": "number" },
+                "tenureTier": {
+                  "items": {
+                    "properties": {
+                      "fromTenure": {
+                        "properties": {
+                          "days": { "type": "number" },
+                          "months": { "type": "number" },
+                          "years": { "type": "number" }
+                        },
+                        "type": "object"
+                      },
+                      "toTenure": {
+                        "properties": {
+                          "days": { "type": "number" },
+                          "months": { "type": "number" },
+                          "years": { "type": "number" }
+                        },
+                        "type": "object"
+                      },
+                      "interestRate": { "type": "number" }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "currency": { "type": "string" },
+          "description": { "type": "string" },
+          "name": { "type": "string" },
+          "rateSpecificationCode": { "type": "string" },
+          "status": { "type": "string" },
+          "validFrom": { "type": "string" },
+          "validTill": { "type": "string" }
+        },
+        "type": "object"
+      }
+    key: key
+    isEncrypted: false
+    useVault: false
+    value:
+      name: LSG SCRA Interest Program for US Subprime Credit Card
+      code: SPGUS003003
+      description: Interest Program tailored for subprime US credit card customers
+      type: scra
+      precedenceCode: '1000'
+      validFrom: '2026-03-22T00:00:00.000+00:00'
+      validUntil: '2999-01-01T23:09:01.795+07:00'
+      currency: USD
+      interestRules:
+        - applicableTo:
+            maxValueThreshold: 999999999
+            minValueThreshold: 1
+            postingCategories:
+              - '*'
+            transactionSelectionCriterion: |
+              function evaluate(ruleContext) {
+                var tags = ruleContext.ledgerInfo.tags || [];
+                var valueDateStr = ruleContext.postingInfo.formattedValueDate;
+                if (!valueDateStr) return false;
+                function parseDate(dateStr) { return dateStr ? new Date(dateStr) : null; }
+                function parseQueryParams(query) {
+                  var result = {};
+                  var pairs = query.split("&");
+                  for (var j = 0; j < pairs.length; j++) {
+                    var pair = pairs[j].split("=");
+                    var key = decodeURIComponent(pair[0]);
+                    var value = decodeURIComponent(pair.length > 1 ? pair[1] : "");
+                    result[key] = value;
+                  }
+                  return result;
+                }
+                function checkIfSCRAValidAsOfPostingValueDate(tags, valueDate) {
+                  for (var i = 0; i < tags.length; i++) {
+                    var tag = tags[i];
+                    if (tag.indexOf("tag://SCRAStatus/") !== 0) continue;
+                    try {
+                      var parts = tag.split("?");
+                      var base = parts[0];
+                      var query = parts.length > 1 ? parts[1] : "";
+                      var level = base.substring(base.lastIndexOf("/") + 1);
+                      var params = parseQueryParams(query);
+                      var effectiveFrom = parseDate(params["effectiveFrom"]);
+                      var expiryDate = parseDate(params["expiryDate"]);
+                      if (!effectiveFrom) continue;
+                      if (expiryDate) {
+                        if (expiryDate >= effectiveFrom) {
+                          return valueDate >= effectiveFrom && valueDate <= expiryDate;
+                        }
+                        return false;
+                      }
+                      return valueDate >= effectiveFrom && level === "LEVEL_1";
+                    } catch (e) { continue; }
+                  }
+                  return false;
+                }
+                var valueDate = parseDate(valueDateStr);
+                if (!valueDate) return false;
+                return checkIfSCRAValidAsOfPostingValueDate(tags, valueDate);
+              }
+      modelParameters:
+        rateTableCode: SCRA001
+        rateTableVersion: 1
+        gracePeriodType: ABSOLUTE
+        gracePeriod: 0
+        margin: '0'
+        amountTiers:
+          - fromAmount: 1
+            toAmount: 999999999
+            tenureTier:
+              - fromTenure: {days: 0, months: 0, years: 0}
+                toTenure: {days: 3650, months: 0, years: 0}
+                interestRate: 6
+  precedenceCode: 100
+  ruleId: RULE01
+  attributes: {}

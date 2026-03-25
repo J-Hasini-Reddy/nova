@@ -1,0 +1,38 @@
+---
+# Why: Subprime customers rely heavily on gas
+# spends — tracking this essential category
+# feeds behavioral data into ADE risk_pulse_score
+kind: PostingCategorySpecification
+apiVersion: rrsd.zetaapps.in/v1alpha1
+metadata:
+  name: lsg.aura.postingcategoryspecification.module.gas-station-spend-colus008001
+  labels:
+    rrsd.zetaapps.in/day: day-zero
+  annotations:
+    zeta.tech/resource-tags: '{"gitDbRepo":"tenant_configuration.aws-default-pp-mumbai.lsg","gitDbPath":"https://gitea.internal.mum1-pp.zetaapps.in/zetaengg/tenant_configuration.aws-default-pp-mumbai.lsg.git","filePath":"module_configurations/module_aura/posting-category-specification/posting-category-specification_gas-station-spend-colus008001.yaml","tenantCode":"lsg"}'
+spec:
+  metadata:
+    id: aura.postingcategoryspecification.module.gas-station-spend-colus008001
+    name: aura.postingcategoryspecification.module.gas-station-spend-colus008001
+    description: Tracks gas station spends for subprime credit behavior scoring
+    tenantId: '600309'
+    tenantCode: lsg
+  coaCode: COLUS008001        # US COA
+  code: GAS_STATION_SPEND     # ⭐ NEW
+  description: GAS_STATION_SPEND_COLUS008001
+  name: GAS_STATION_SPEND_COLUS008001
+  attributionFunction:
+    function: |-
+      function apply(data) {
+          return {
+              value: data.ledgerRecord.amount,
+              recordType: data.ledgerRecord.recordType
+          };
+      }
+    type: JAVASCRIPT
+  selectionCriteria:
+    - attrKey: super-card.mcc        # MCC code of the transaction
+      attrVal: "5541, 5542"          # ⭐ 5541 = Gas Station, 5542 = Automated Fuel Dispenser
+      txnCategoryComparator: ANYOF   # Match ANY of the MCC codes
+  selectionCriteriaCondition: AND
+  status: ENABLED

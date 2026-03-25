@@ -5,7 +5,7 @@ metadata:
 spec:
   metadata:
     id: statement.statementpolicy.3004
-    name: Nova Financial Coach Generation Policy
+    name: Secured Unsecured Financial Coach Generation Policy
     description: 3004-based policies for US subprime rebuilder segment
     requester:
       module: statement
@@ -15,7 +15,7 @@ spec:
   validFrom: '2026-01-01T00:00:00.000-05:00'
   validTill: '2999-01-01T00:00:00.000-05:00'
   name: Statement Generation Policy
-  description: Nova Rebuilder Generation Policy
+  description: Secured Unsecured Rebuilder Generation Policy
   code: STMGEN003004
   physicalStatementThreshold: '20'
   password: function password(context) { return 'password' }
@@ -71,26 +71,26 @@ spec:
         metaData:
           isSuppressed: false
 
-      # RULE: Graduation Milestone (Nova Genesis to Rise Path)
+      # RULE: Graduation Milestone (Secured to Unsecured Path)
       - name: STATEMENT_PDF_MESSAGE
         code: NOVA_GRAD_NUDGE
         status: ENABLED
         priority: 2
         order: 1
-        condition: input.onTimePaymentsCount >= 5 && input.productTier == 'GENESIS'
-        content: "You're doing great! You are just one on-time payment away from a Nova Rise (Unsecured) eligibility review."
+        condition: input.onTimePaymentsCount >= 5 && input.productTier == 'SECURED'
+        content: "You're doing great! You are just one on-time payment away from an Unsecured eligibility review."
         frequency: EVERYTIME
         metaData:
           isSuppressed: false
 
-      # RULE: Nova Shield (The Safety Net / Delinquency Dignity)
+      # RULE: Payment Shield (The Safety Net / Delinquency Dignity)
       - name: STATEMENT_PDF_MESSAGE
         code: NOVA_SAFETY_NET
         status: ENABLED
         priority: 3
         order: 1
         condition: input.delinquencyStatus == '1-CYCLE'
-        content: "Nova Shield: Struggling this month? Use 'Snooze' in the Nova App to shift your due date by 5 days with no fee."
+        content: "Payment Shield: Struggling this month? Use 'Snooze' in the app to shift your due date by 5 days with no fee."
         frequency: EVERYTIME
         metaData:
           isSuppressed: false
