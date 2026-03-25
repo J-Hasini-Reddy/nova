@@ -78,19 +78,26 @@ spec:
       directed: true
       code: CRAUS00600
       version: 1
-      description: Unmatched and Matched Refunds
+      description: Unified merchant credit allocation for Nova Rise (Unsecured)
+      productCode: NOVA_RISE
+      cardTier: UNSECURED
+      creditAllocationSpecification:
+        code: CRSUS009902
+        version: 1
+      interestBucketRouting:
+        PARTNER_GROCERIES_MCC_5411: RETAIL_INTEREST_UNSECURED
+        PARTNER_GAS_MCC_5541: FUEL_INTEREST_UNSECURED
+        PARTNER_GAS_MCC_5542: FUEL_INTEREST_UNSECURED
       lienMarkedDebitPosting: false
-      name: Credit Allocation Principal Debits
+      name: Unified Merchant Credits - Nova Rise
       precedenceCode: '10'
       status: ENABLED
       validFrom: '2000-01-01T00:00:00.000-05:00'
       validUntil: '2999-01-01T00:00:00.000-05:00'
       voucherCodes:
-      - CARD_CASH_CLEARANCE_REFUND
-      - CARD_CREDIT_ADJUSTMENTS
-      - CARD_PURCHASE_CLEARANCE_REFUND
-      - CARD_CASH_CREDIT_ADJUSTMENTS
-      - CARD_PURCHASE_CREDIT_ADJUSTMENTS
+      - PARTNER_GROCERIES_MCC_5411
+      - PARTNER_GAS_MCC_5541
+      - PARTNER_GAS_MCC_5542
   metadata:
     id: auraapps.creditallocationprogram.module.credit-allocation-program-test
     name: auraapps.creditallocationprogram.module.credit-allocation-program-test

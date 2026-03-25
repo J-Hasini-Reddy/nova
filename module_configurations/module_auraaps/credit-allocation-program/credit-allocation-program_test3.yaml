@@ -78,19 +78,26 @@ spec:
       directed: true
       code: CRAUS00690
       version: 1
-      description: Unmatched and Matched Refunds
+      description: Unified merchant credit allocation for Nova Genesis (Secured)
+      productCode: NOVA_GEN
+      cardTier: SECURED
+      creditAllocationSpecification:
+        code: CRSUS009901
+        version: 1
+      interestBucketRouting:
+        PARTNER_GROCERIES_MCC_5411: RETAIL_INTEREST_SECURED
+        PARTNER_GAS_MCC_5541: FUEL_INTEREST_SECURED
+        PARTNER_GAS_MCC_5542: FUEL_INTEREST_SECURED
       lienMarkedDebitPosting: false
-      name: Credit Allocation Principal Debits
+      name: Unified Merchant Credits - Nova Genesis
       precedenceCode: '10'
       status: ENABLED
       validFrom: '2000-01-01T00:00:00.000-05:00'
       validUntil: '2999-01-01T00:00:00.000-05:00'
       voucherCodes:
-      - CARD_CASH_CLEARANCE_REFUND
-      - CARD_CREDIT_ADJUSTMENTS
-      - CARD_PURCHASE_CLEARANCE_REFUND
-      - CARD_CASH_CREDIT_ADJUSTMENTS
-      - CARD_PURCHASE_CREDIT_ADJUSTMENTS
+      - PARTNER_GROCERIES_MCC_5411
+      - PARTNER_GAS_MCC_5541
+      - PARTNER_GAS_MCC_5542
   metadata:
     id: auraapps.creditallocationprogram.module.test3
     name: auraapps.creditallocationprogram.module.test3

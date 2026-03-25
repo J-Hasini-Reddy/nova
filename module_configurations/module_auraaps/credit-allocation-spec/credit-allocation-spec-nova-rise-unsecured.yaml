@@ -1,7 +1,7 @@
 apiVersion: rrsd.zetaapps.in/v1alpha1
 kind: CreditAllocationSpec
 metadata:
-  name: lsg.auraapps.module.creditallocationspec.credit.impacting.principal.debits
+  name: lsg.auraapps.module.creditallocationspec.nova-rise.unsecured
   annotations: null
   labels:
     module: auraapps
@@ -9,12 +9,12 @@ metadata:
   namespace: auraapps
 spec:
   metadata:
-    id: auraapps.module.creditallocationspec.credit.impacting.principal.debits
-    name: Nova Genesis secured unified allocation spec
-    description: Unified US-credit allocation spec for Nova Genesis secured product
+    id: auraapps.module.creditallocationspec.nova-rise.unsecured
+    name: Nova Rise unsecured unified allocation spec
+    description: Unified US-credit allocation spec for Nova Rise unsecured product
     tenantId: '600309'
     tenantCode: lsg
-  code: CRSUS009901
+  code: CRSUS009902
   flags:
     allocateToCategoryType: true
     shouldMADBeKnockedOff: true

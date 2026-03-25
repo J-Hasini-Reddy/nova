@@ -12,23 +12,28 @@ metadata:
 spec:
   code: CROUS009009
   description: Ruby Credit Allocation Policy
+  productDiscriminatorField: Product_Code
+  programSelectionStrategy: CONDITIONAL_PRECEDENCE
   metadata:
     id: auraapps.creditallocationpolicy.module.credit-allocation-policy-test
     name: auraapps.creditallocationpolicy.module.credit-allocation-policy-test
     description: auraapps.creditallocationpolicy.module.credit-allocation-policy-test
     tenantId: '600309'
     tenantCode: lsg
-  name: Credit Allocation Policy Test
+  name: Credit Allocation Policy - Nova Unified
   programs:
-  - code: CRAUS001001
+  - code: CRAUS00690
     precedenceScore: '10'
-  - code: CRAUS001002
+    selector:
+      field: Product_Code
+      operator: EQUALS
+      value: NOVA_GEN
+  - code: CRAUS00600
     precedenceScore: '20'
-  - code: CRAUS001003
-    precedenceScore: '30'
-  - code: CRAUS001004
-    precedenceScore: '40'
-  - code: CRAUS001005
-    precedenceScore: '50'
+    selector:
+      field: Product_Code
+      operator: EQUALS
+      value: NOVA_RISE
+  templateCode: us-credit
   validFrom: '2000-01-01T00:00:00.000+07:00'
   validTill: '2999-12-31T00:00:00.000+07:00'
